@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "deploy": "gh-pages -d dist",
-    "buildeploy": "npm run build:example && npm run deploy:example",
+    "buildeploy": "npm run build && npm run deploy",
     "serve": "vite preview"
   },
   "repository": {
