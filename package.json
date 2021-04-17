@@ -1,0 +1,33 @@
+{
+  "name": "vjsx_page",
+  "version": "1.0.0",
+  "description": "vanilla.jsx homepage",
+  "main": "vite.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
+    "buildeploy": "npm run build:example && npm run deploy:example",
+    "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanillajsx/homepage.git"
+  },
+  "author": "Momijiichigo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanillajsx/homepage/issues"
+  },
+  "homepage": "https://github.com/vanillajsx/homepage#readme",
+  "devDependencies": {
+    "@types/marked": "^2.0.2",
+    "@vanillajsx/vjsx": "^0.0.1",
+    "gh-pages": "^3.1.0",
+    "github-markdown-css": "^4.0.0",
+    "highlight.js": "^10.7.2",
+    "marked": "^2.0.1",
+    "sass": "^1.32.8",
+    "vite": "^2.1.5"
+  }
+}
