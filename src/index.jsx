@@ -1,3 +1,4 @@
+import './declaration.d'
 import './style.css'
 import Header from './components/Header'
 import Main from './components/Main'
