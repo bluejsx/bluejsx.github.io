@@ -2,7 +2,7 @@ import { useAttr } from '@vanillajsx/vjsx'
 import './menu.scss'
 
 const contents = [
-  ['View the Source Code of This Page', 'https://github.com/vanillajsx/VanillaJSX/tree/master/examples/example1'],
+  ['View the Source Code of This Page', 'https://github.com/vanillajsx/vanillajsx.github.io'],
   ['GitHub Repository', 'https://github.com/vanillajsx/VanillaJSX'],
   ['Join Discussions', 'https://github.com/vanillajsx/VanillaJSX/discussions']
 ]

@@ -16,10 +16,14 @@
     scroll-snap-align: start;
     color: white;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: block;
+    //flex-direction: column;
     &:nth-child(1){
-      height: calc(100vh - 2 * var(--page-padding-side))
+      height: max( calc(100vh - 2 * var(--page-padding-side)) );
+      img[alt='logo'] {
+        background-color: transparent;
+        width: 200px;
+      }
     }
     h1 {
       font-size: xxx-large;

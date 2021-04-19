@@ -1,6 +1,8 @@
 <div class='center'>
 
-# Welcome to VanillaJSX!
+![logo](./vjsx.svg)
+
+#  Welcome to VanillaJSX!
 
 ### Just a pure Javascript with JSX syntax.
 
