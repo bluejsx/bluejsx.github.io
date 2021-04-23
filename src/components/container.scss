@@ -1,19 +1,21 @@
 :root {
-  --page-padding-side: 10vw;
+  --page-padding-side: 7vw;
 }
 .container {
   margin-top: var(--header-hight);
   position: absolute;
   width: 100vw;
   height: 100vh;
-  scroll-snap-type: y proximity;
+  background: linear-gradient(#178bb7, #69c38d);
+  //scroll-snap-type: y mandatory;
   overflow: scroll;
   font-size: 125%;
   text-align: left;
   section {
     width: calc( 100vw - 2 * var(--page-padding-side));
     padding: var(--page-padding-side);
-    scroll-snap-align: start;
+    //padding-top: calc(var(--page-padding-side)/2);
+    //scroll-snap-align: start;
     color: white;
     overflow: hidden;
     display: block;
@@ -37,9 +39,11 @@
         background-color: transparent;
       }
     }
-    
+    .markdown-body ul {
+      padding-left: 1.5em;
+    }
     a {
-      color: #2be677;
+      color: #2c05ff;
       &::after {
         content: '↗︎';
       }

@@ -10,7 +10,7 @@ Code with pure Javascript, components, and JSX!
 </div>
 
 
-<div class='boxed' style='color: #a01232; font-size: larger;'>
+<div class='boxed' style='color: #a01232; font-size: larger; padding: 0.3rem;'>
 
 ### ⚠️Caution⚠️
 - This is still in Draft phase!
@@ -68,21 +68,28 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 ---
 
 
-#### When you load VanillaJSX library,
+### When you load VanillaJSX library,
 - `on` method, a shorthand of `addEventListener` 
 is available on all the objects which provide 'addEventListener'.
-#### VanillaJSX provides:
-- `useAttr(elem: Element, propName: string, defaultValue: any)` method:
+
+### VanillaJSX provides:
+- `useAttr` method:
+  ```ts
+  import { useAttr } from '@vanillajsx/vjsx'
+  useAttr(elem: Element, propName: string, defaultValue: any)
+  ```
   - This sets custom property variable on your element.
   - This makes you able to listen the value change using `watch` listener:
-  - `elem.watch(propName: string, newValue => void)`
+    ```ts
+    elem.watch(propName: string, (newValue) => void)
+    ```
     - `watch` listener is similar to `addEventListener` 
-    - difference is that the listener function in `watch` recieves the new property value, not `Event` object.
+    - The difference is that the listener function in `watch` recieves the new property value, not `Event` object.
   - The code example below shows the usage of `useAttr` and `watch`.
 
 You can code using function component, or using [CustomElement](https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements)
 
-#### Code Example
+### Code Example
 ```jsx
 import { useAttr } from '@vanillajsx/vjsx'
 import { CustomProgress } from './CustomProgress'
@@ -91,7 +98,7 @@ import { CustomProgress } from './CustomProgress'
 const Example = ({progValue=0, children})=>{
 
   //declare elements
-  const progress = <CustomProgress min='0' max='100' value={progValue}/>
+  const progress = <CustomProgress max='100' value={progValue}/>
   const btn = <button>click</button>
   const self = (
     <div class='t3'>
