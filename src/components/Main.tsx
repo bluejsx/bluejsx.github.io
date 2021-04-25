@@ -17,25 +17,21 @@ marked.setOptions({
     return hljs.highlightAuto(code, [lang]).value
   }
 })
-const Main = () =>{
-  const container = (<div class='container'>
-    {async (set: any, elem: VJSX.JSX.Element)=>{
-      await import('./article.md?raw').then(mod=>
-        marked(mod.default).split('<hr>').forEach(htmStr=>
-          elem.appendChild(
-            <section innerHTML={htmStr} class='markdown-body' />
+const Main = () =>
+  <div class={main}>
+    <div class='container'>
+      {async (_set: any, elem: VJSX.JSX.Element)=>{
+        await import('./article.md?raw').then(mod=>
+          marked(mod.default).split('<hr>').forEach(htmStr=>
+            elem.appendChild(
+              <section innerHTML={htmStr} class='markdown-body' />
+            )
           )
         )
-      )
-      container.querySelector('#example-result-space').appendChild(<Example />)
-    }}
-  </div>)
-  
-  const self = <div class={main}>
-    {container}
+        elem.querySelector('#example-result-space').appendChild(<Example />)
+      }}
+    </div>
   </div>
-  return self
-}
 
 
 export default Main
