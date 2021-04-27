@@ -18,19 +18,17 @@ marked.setOptions({
   }
 })
 const Main = () =>
-  <div class={main}>
-    <div class='container'>
-      {async (_set: any, elem: VJSX.JSX.Element)=>{
-        await import('./article.md?raw').then(mod=>
-          marked(mod.default).split('<hr>').forEach(htmStr=>
-            elem.appendChild(
-              <section innerHTML={htmStr} class='markdown-body' />
-            )
+  <div class={`container ${main}`}>
+    {async (_set: any, elem: VJSX.JSX.Element)=>{
+      await import('./article.md?raw').then(mod=>
+        marked(mod.default).split('<hr>').forEach(htmStr=>
+          elem.appendChild(
+            <section innerHTML={htmStr} class='markdown-body' />
           )
         )
-        elem.querySelector('#example-result-space').appendChild(<Example />)
-      }}
-    </div>
+      )
+      elem.querySelector('#example-result-space').appendChild(<Example />)
+    }}
   </div>
 
 
