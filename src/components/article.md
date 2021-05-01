@@ -92,7 +92,7 @@ You can code using function component, or using [CustomElement](https://develope
 ### Code Example
 ```jsx
 import { useAttr } from '@vanillajsx/vjsx'
-import { CustomProgress } from './CustomProgress'
+import CustomProgress from './CustomProgress'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({progValue=0, children})=>{
