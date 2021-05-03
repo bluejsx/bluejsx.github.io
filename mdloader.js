@@ -1,7 +1,7 @@
 import marked from 'marked'
 
 export default function mdLoader(options){
-  highlight && marked.setOptions(options)
+  marked.setOptions(options||{})
   return {
     name: 'vite-plugin-md-loader',
     transform(code, id){

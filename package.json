@@ -27,7 +27,7 @@
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.7.2",
     "marked": "^2.0.1",
-    "sass": "^1.32.8",
-    "vite": "^2.1.5"
+    "sass": "^1.32.12",
+    "vite": "^2.2.3"
   }
 }

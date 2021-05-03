@@ -146,8 +146,6 @@ const Example = ({progValue=0, children})=>{
 
 - [x] VanillaJSX processor
   - it dynamically appends components
-- [ ] make Typescript code suggestion work
-  - maybe making VSCode Extension might be a solution
 - [ ] Vite.js HMR Plugin
 - [ ] SSG builder
   - it generates 
