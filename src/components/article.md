@@ -10,7 +10,7 @@ Code with pure Javascript, components, and JSX!
 </div>
 
 
-<div class='boxed' style='color: #a01232; font-size: larger; padding: 0.3rem;'>
+<div class='boxed' style='color: #d20c38; font-size: larger; padding: 0.3rem; border-color: red;'>
 
 ### ⚠️Caution⚠️
 - This is still in Draft phase!
@@ -20,13 +20,12 @@ Code with pure Javascript, components, and JSX!
 ---
 
 ### Features
-- Component Based Development!
-- JSX syntax!
-- NO complex framework!
+- Component Based Development
+- JSX syntax
+- NO complex framework
 - NO virtual DOMs! Just use your familiar HTML DOMs!
 - No Re-rendering by its framework, easier for developers to understand the behavior
 - Less Learning Difficulty than React
-- Just use your JS skills!
 - If you want to change DOM attributes or texts, JUST SET THEM BY YOURSELF!
 - TS support
 
@@ -40,16 +39,17 @@ const elem1 = <div id='elem1'>hi!</div>
 This will work as:
 ```js
 const elem1 = document.createElement('div')
-elem1.append('hi!')
 elem1.id = 'elem1'
+elem1.append('hi!')
 ```
 
 ---
 
 ## Usage
 ### Installation
+
 ```sh
-npm i @vanillajsx/vjsx
+npm i -D @vanillajsx/vjsx
 ```
 ### for [vitejs](https://vitejs.dev/)
 in your `vite.config.js`:
@@ -67,10 +67,6 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 
 ---
 
-
-### When you load VanillaJSX library,
-- `on` method, a shorthand of `addEventListener` 
-is available on all the objects which provide 'addEventListener'.
 
 ### VanillaJSX provides:
 - `useAttr` method:
@@ -136,9 +132,22 @@ const Example = ({progValue=0, children})=>{
 ```
 
 ### Result of the code above
-<div id='example-result-space' class='boxed'></div>
+<div id='example-result-space' class='boxed' style='background: #272727cc;'></div>
 
 - see how changing `self.progValue` affects other multiple values using `self.watch` method.
+
+---
+
+### Tips
+
+Since you load VanillaJSX in your javascript, `on` method, a shorthand of `addEventListener` is available on all the objects which provide `addEventListener` method (i.e. `EventTarget` objects).
+
+This can be simply implemented by the code below:
+
+```js
+EventTarget.prototype.on = EventTarget.prototype.addEventListener
+```
+
 
 ---
 

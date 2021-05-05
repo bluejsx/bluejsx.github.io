@@ -6,7 +6,7 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(#178bb7, #69c38d);
+  background: linear-gradient(#178bb7, #4fa571);
   //scroll-snap-type: y mandatory;
   overflow: scroll;
   font-size: 125%;
@@ -34,7 +34,7 @@
       background-color: rgb(27 31 35 / 55%);
     }
     pre {
-      background-color: rgb(39, 39, 39);
+      background-color: #272727cc;
       code {
         background-color: transparent;
       }
