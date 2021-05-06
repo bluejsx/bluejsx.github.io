@@ -45,8 +45,8 @@ elem1.append('hi!')
 
 ---
 
-## Usage
-### Installation
+
+## Installation
 
 ```sh
 npm i -D @vanillajsx/vjsx
@@ -74,8 +74,8 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
   import { useAttr } from '@vanillajsx/vjsx'
   useAttr(elem: Element, propName: string, defaultValue: any)
   ```
-  - This sets custom property variable on your element.
-  - This makes you able to listen the value change using `watch` listener:
+  - This defines custom property setter/getter on your element.
+  - You are able to listen the value change using watch listener:
     ```ts
     elem.watch(propName: string, (newValue) => void)
     ```
@@ -135,6 +135,10 @@ const Example = ({progValue=0, children})=>{
 <div id='example-result-space' class='boxed' style='background: #272727cc;'></div>
 
 - see how changing `self.progValue` affects other multiple values using `self.watch` method.
+
+### For more details 
+
+Please see the [document](https://github.com/vanillajsx/VanillaJSX/tree/master/doc)
 
 ---
 
