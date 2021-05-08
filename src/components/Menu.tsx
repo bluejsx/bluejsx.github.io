@@ -8,22 +8,29 @@ const contents = [
   ['Join Discussions', 'https://github.com/vanillajsx/VanillaJSX/discussions']
 ]
 const Menu = () =>{
-  const toggleButton = (<div id='h-menu-button'>
-    <span></span>
-    <span></span>
-  </div>)
-  const backField = <div id='backfield'></div>
-  const self = (<div class='menu_list_container hidden'>
-    {toggleButton}
-    <div class='menu-list'>{
-      contents.map(v=>{
-        const link = <p>{v[0]}</p>
-        link.onclick = () =>window.open(v[1])
-        return link
-      })
-    }</div>
-    {backField}
-  </div>)
+  const refs: {
+    toggleButton?: HTMLDivElement,
+    backField?: HTMLDivElement
+  } = {}
+  const self = (
+    <div class='menu_list_container hidden'>
+      <div ref={[refs, 'toggleButton']} id='h-menu-button'>
+        <span></span>
+        <span></span>
+      </div>
+      <div class='menu-list'>{
+        contents.map(v=>{
+          const link = <p>{v[0]}</p>
+          link.onclick = () =>window.open(v[1])
+          return link
+        })
+      }</div>
+      <div ref={[refs, 'backField']} id='backfield'></div>
+    </div>
+  )
+
+  const { toggleButton, backField } = refs
+
   useAttr(self, 'open', false)
   self.watch('open', v=>{
     if(v){
