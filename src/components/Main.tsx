@@ -10,7 +10,7 @@ const {log} = console
 
 const Main = () =>
   <div class={`container ${main}`}>
-    {async (_set: any, elem: VJSX.JSX.Element)=>{
+    {async (elem: VJSX.JSX.Element)=>{
       await import('./article.md').then(mod=>
         mod.default.split('<hr>').forEach(htmStr=>
           elem.appendChild(
