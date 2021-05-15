@@ -96,11 +96,12 @@ const Example = ({progValue=0, children})=>{
   //declare elements
   const progress = <CustomProgress max='100' value={progValue}/>
   const btn = <button>click</button>
+  const progText = new Text()
   const self = (
     <div class='t3'>
       {btn}
       {progress} 
-      {(set, elem)=>elem.watch('progValue',v=>set(v))} %
+      {progText}%
       {children}
     </div>
   )
@@ -114,8 +115,10 @@ const Example = ({progValue=0, children})=>{
 
   // functionalities
   //when `self.progValue` changed, set `progress.value` to `self.progValue`
-  self.watch('progValue',v=> progress.value = v)
-
+  self.watch('progValue',v=>{
+    progress.value = v
+    progText.data = v
+  })
   btn.onclick = () =>{
     /*
       below just looks assigning a value to a property,
