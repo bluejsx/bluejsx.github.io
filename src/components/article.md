@@ -114,8 +114,8 @@ const Example = ({progValue=0, children})=>{
   useAttr(self, 'progValue', progValue)
 
   // functionalities
-  //when `self.progValue` changed, set `progress.value` to `self.progValue`
-  self.watch('progValue',v=>{
+  //when `self.progValue` changed, run the following listener
+  self.watch('progValue', v=>{
     progress.value = v
     progText.data = v
   })
