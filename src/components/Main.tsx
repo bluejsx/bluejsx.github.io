@@ -5,17 +5,12 @@ import 'highlight.js/styles/vs2015.css'
 import { main } from './Main.module.scss'
 import './container.scss'
 
-import Example from './Example'
+import exampleCode from './Example?raw'
 import CodeSpace from './CodeSpace'
 const {log} = console
 
 const Main = () =>
   <div class={`container ${main}`}>
-    <CodeSpace code={
-`
-console.log('hi!!')
-`
-    }/>
     {async (elem: VJSX.JSX.Element)=>{
       await import('./article.md').then(mod=>
         mod.default.split('<hr>').forEach(htmStr=>
@@ -24,7 +19,7 @@ console.log('hi!!')
           )
         )
       )
-      elem.querySelector('#example-result-space').appendChild(<Example />)
+      elem.querySelector('#example-codespace').appendChild(<CodeSpace code={exampleCode}/>)
     }}
   </div>
 

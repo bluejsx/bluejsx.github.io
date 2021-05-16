@@ -86,56 +86,7 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 You can code using function component, or using [CustomElement](https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements)
 
 ### Code Example
-```jsx
-import { useAttr } from '@vanillajsx/vjsx'
-import CustomProgress from './CustomProgress'
-
-//takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({progValue=0, children})=>{
-
-  //declare elements
-  const progress = <CustomProgress max='100' value={progValue}/>
-  const btn = <button>click</button>
-  const progText = new Text()
-  const self = (
-    <div class='t3'>
-      {btn}
-      {progress} 
-      {progText}%
-      {children}
-    </div>
-  )
-
-  /*
-  below defines a property named 'progValue',
-  and when 'progValue' changes, 
-  all registered listeners will be executed.
-  */
-  useAttr(self, 'progValue', progValue)
-
-  // functionalities
-  //when `self.progValue` changed, run the following listener
-  self.watch('progValue', v=>{
-    progress.value = v
-    progText.data = v
-  })
-  btn.onclick = () =>{
-    /*
-      below just looks assigning a value to a property,
-      however this is running getter/setter method,
-      which executes all listener functions registered via `watch` method.
-    */
-    if(self.progValue<100) self.progValue+=10
-    else self.progValue = 0
-  }
-
-  // return self element
-  return self	
-}
-```
-
-### Result of the code above
-<div id='example-result-space' class='boxed' style='background: #272727cc;'></div>
+<div id='example-codespace'></div>
 
 - see how changing `self.progValue` affects other multiple values using `self.watch` method.
 
