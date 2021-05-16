@@ -6,10 +6,16 @@ import { main } from './Main.module.scss'
 import './container.scss'
 
 import Example from './Example'
+import CodeSpace from './CodeSpace'
 const {log} = console
 
 const Main = () =>
   <div class={`container ${main}`}>
+    <CodeSpace code={
+`
+console.log('hi!!')
+`
+    }/>
     {async (elem: VJSX.JSX.Element)=>{
       await import('./article.md').then(mod=>
         mod.default.split('<hr>').forEach(htmStr=>
