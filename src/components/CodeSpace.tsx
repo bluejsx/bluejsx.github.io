@@ -32,7 +32,7 @@ monaco.languages.typescript.typescriptDefaults.addExtraLib(
   'file:///node_modules/@vanillajsx/vjsx/vjsxlib.ts');
 
 const CodeSpace = ({ code='', lang='jsx' }: { code?: string, lang?: string })
-  : VJSX.JSX.Element & Record<'editor', monaco.editor.IStandaloneCodeEditor> =>{
+  : VJSX.JSX.Element & {editor: monaco.editor.IStandaloneCodeEditor} =>{
   const refs: {
     editorContainer?: HTMLDivElement,
     resultSpace?: HTMLDivElement,
@@ -70,7 +70,7 @@ const CodeSpace = ({ code='', lang='jsx' }: { code?: string, lang?: string })
     value: editor
   })
   
-  return self as VJSX.JSX.Element & Record<'editor', monaco.editor.IStandaloneCodeEditor> 
+  return self as VJSX.JSX.Element & {editor: monaco.editor.IStandaloneCodeEditor}
 }
 //const ts = window.ts
 const compileTS = (code: string) => {
