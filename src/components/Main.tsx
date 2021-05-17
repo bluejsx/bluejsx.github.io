@@ -19,7 +19,11 @@ const Main = () =>
           )
         )
       )
-      elem.querySelector('#example-codespace').appendChild(<CodeSpace code={exampleCode}/>)
+      await import('./CodeSpace').then(mod=>{
+        const CodeSpace = mod.default
+        elem.querySelector('#example-codespace').appendChild(<CodeSpace code={exampleCode}/>)
+      })
+      
     }}
   </div>
 

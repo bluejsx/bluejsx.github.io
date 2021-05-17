@@ -1,9 +1,15 @@
 import * as monaco from 'monaco-editor'
+import ts from 'typescript/lib/typescriptServices'
+
 import './codespace.scss'
 import vjsxDCode from '@vanillajsx/vjsx/src/@types/vjsx.d?raw'
 import vjsxCode from '@vanillajsx/vjsx/src/vjsx?raw'
 import vjsxLibCode from '@vanillajsx/vjsx/src/vjsxlib?raw'
-//import { useAttr } from '@vanillajsx/vjsx'
+import { useAttr } from '@vanillajsx/vjsx'
+
+globalThis.VJSX = VJSX
+globalThis.useAttr = useAttr
+
 // compiler options
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -31,13 +37,16 @@ monaco.languages.typescript.typescriptDefaults.addExtraLib(
 
 const CodeSpace = ({ code='' }: { code?: string, }) =>{
   const refs: {
-    editorContainer?: HTMLDivElement
+    editorContainer?: HTMLDivElement,
+    resultSpace?: HTMLDivElement,
+    runButton?: HTMLElementTagNameMap['button']
   } = {}
   const self = <div class='codespace'>
     <div ref={[refs, 'editorContainer']} class='editor-container'/>
-    <div class='editor-result'></div>
+    <button ref={[refs, 'runButton']} class='run-button'>run ▶️</button>
+    <div ref={[refs, 'resultSpace']} class='editor-result'></div>
   </div>
-  const { editorContainer } = refs
+  const { editorContainer, resultSpace, runButton } = refs
 
   const editor = monaco.editor.create(editorContainer, {
     lineNumbers: 'off',
@@ -49,8 +58,32 @@ const CodeSpace = ({ code='' }: { code?: string, }) =>{
     },
     model: monaco.editor.createModel(code, 'typescript', monaco.Uri.parse('file:///main.jsx'))
   })
+  const runCode = () =>{
+    resultSpace.innerHTML=''
+    import(/* @vite-ignore */
+      'data:text/javascript;charset=utf-8,'
+      +encodeURIComponent(compileTS(editor.getValue()))
+    ).then(Mod => resultSpace.appendChild(<Mod.default />))
+  }
+  runButton.onclick = runCode
+  runCode()
   
   return self
+}
+//const ts = window.ts
+const compileTS = (code: string) => {
+  code = code.replace(/import +(VJSX* *,? *)?({? *[\w]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
+  
+  return ts.transpile(code, {
+    jsx: ts.JsxEmit.React,
+    jsxFactory: 'VJSX.r',
+    jsxFragmentFactory: 'VJSX.Fragment',
+    lib: ["dom", "esnext"],
+    module: ts.ModuleKind.ESNext,
+    target: ts.ScriptTarget.ES2015,
+    removeComments: true
+  })
+  
 }
 
 export default CodeSpace

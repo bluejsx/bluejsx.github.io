@@ -1,6 +1,5 @@
 import mdLoader from './mdloader'
 import hljs from 'highlight.js'
-import monaco from 'rollup-plugin-monaco-editor';
 /**
  * @type {import('vite').UserConfig}
  */
@@ -16,7 +15,6 @@ export default {
         return hljs.highlightAuto(code, [lang]).value
       }
     }),
-    //monaco({ languages: ['javascript', 'typescript'] }),
   ],
   base: './',
   assetsInclude: 'public/*'
