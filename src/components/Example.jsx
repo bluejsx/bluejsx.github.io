@@ -1,7 +1,7 @@
 import { useAttr } from '@vanillajsx/vjsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({progValue = 0, children = null})=>{
+const Example = ({ progValue = 0, children = null })=>{
 
   //declare elements
   const progress = <progress max={100} value={progValue}/>

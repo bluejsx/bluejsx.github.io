@@ -35,7 +35,8 @@ monaco.languages.typescript.typescriptDefaults.addExtraLib(
   vjsxLibCode,
   'file:///node_modules/@vanillajsx/vjsx/vjsxlib.ts');
 
-const CodeSpace = ({ code='' }: { code?: string, }) =>{
+const CodeSpace = ({ code='', lang='jsx' }: { code?: string, lang?: string })
+  : VJSX.JSX.Element & Record<'editor', monaco.editor.IStandaloneCodeEditor> =>{
   const refs: {
     editorContainer?: HTMLDivElement,
     resultSpace?: HTMLDivElement,
@@ -56,7 +57,7 @@ const CodeSpace = ({ code='' }: { code?: string, }) =>{
     minimap: {
       enabled: false
     },
-    model: monaco.editor.createModel(code, 'typescript', monaco.Uri.parse('file:///main.jsx'))
+    model: monaco.editor.createModel(code, 'typescript', monaco.Uri.parse('file:///main.'+lang))
   })
   const runCode = () =>{
     resultSpace.innerHTML=''
@@ -67,8 +68,13 @@ const CodeSpace = ({ code='' }: { code?: string, }) =>{
   }
   runButton.onclick = runCode
   runCode()
+
+  //self.editor = editor
+  Object.defineProperty(self, 'editor' ,{
+    value: editor
+  })
   
-  return self
+  return self as VJSX.JSX.Element & Record<'editor', monaco.editor.IStandaloneCodeEditor> 
 }
 //const ts = window.ts
 const compileTS = (code: string) => {
