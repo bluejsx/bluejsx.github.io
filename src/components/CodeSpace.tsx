@@ -74,7 +74,7 @@ const CodeSpace = ({ code='', lang='jsx' }: { code?: string, lang?: string })
 }
 //const ts = window.ts
 const compileTS = (code: string) => {
-  code = code.replace(/import +(VJSX* *,? *)?({? *[\w]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
+  code = code.replace(/import +(VJSX* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
   
   return ts.transpile(code, {
     jsx: ts.JsxEmit.React,
