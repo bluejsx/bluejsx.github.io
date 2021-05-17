@@ -6,7 +6,6 @@ import { main } from './Main.module.scss'
 import './container.scss'
 
 import exampleCode from './Example?raw'
-import CodeSpace from './CodeSpace'
 const {log} = console
 
 const Main = () =>
