@@ -5,10 +5,6 @@ import './codespace.scss'
 import vjsxDCode from '@vanillajsx/vjsx/src/@types/vjsx.d?raw'
 import vjsxCode from '@vanillajsx/vjsx/src/vjsx?raw'
 import vjsxLibCode from '@vanillajsx/vjsx/src/vjsxlib?raw'
-import { useAttr } from '@vanillajsx/vjsx'
-
-globalThis.VJSX = VJSX
-globalThis.useAttr = useAttr
 
 // compiler options
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({

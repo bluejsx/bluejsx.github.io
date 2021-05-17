@@ -1,5 +1,6 @@
 import mdLoader from './mdloader'
 import hljs from 'highlight.js'
+const prefix = `monaco-editor/esm/vs`;
 /**
  * @type {import('vite').UserConfig}
  */
@@ -16,6 +17,19 @@ export default {
       }
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          jsonWorker: [`${prefix}/language/json/json.worker`],
+          cssWorker: [`${prefix}/language/css/css.worker`],
+          htmlWorker: [`${prefix}/language/html/html.worker`],
+          tsWorker: [`${prefix}/language/typescript/ts.worker`],
+          editorWorker: [`${prefix}/editor/editor.worker`],
+        },
+      },
+    },
+  },
   base: './',
   assetsInclude: 'public/*'
 }
