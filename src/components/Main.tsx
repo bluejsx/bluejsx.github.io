@@ -37,7 +37,6 @@ const Main = () =>
       const JSXURI = monaco.Uri.parse('file:///main.jsx'), TSXURI = monaco.Uri.parse('file:///main.tsx'), 
       JSXModel = monaco.editor.getModel(JSXURI) || monaco.editor.createModel(null, 'typescript', JSXURI),
       TSXModel = monaco.editor.getModel(TSXURI) || monaco.editor.createModel(null, 'typescript', TSXURI)
-      editor.getModel()
       codeSelector.onchange = async () =>{
         switch(codeSelector.value){
           case '0':

@@ -1,4 +1,4 @@
-import { useAttr } from '@vanillajsx/vjsx'
+import { useAttr, ElemType } from '@vanillajsx/vjsx'
 import './menu.scss'
 
 const contents = [
@@ -9,8 +9,8 @@ const contents = [
 ]
 const Menu = () =>{
   const refs: {
-    toggleButton?: HTMLDivElement,
-    backField?: HTMLDivElement
+    toggleButton?: ElemType<'div'>,
+    backField?: ElemType<'div'>
   } = {}
   const self = (
     <div class='menu_list_container hidden'>
