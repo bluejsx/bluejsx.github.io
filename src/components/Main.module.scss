@@ -2,7 +2,7 @@
   color: white;
   //font-size: larger;
 }
-#code-options {
+.code-options {
   padding-left: 0.2em;
   padding-right: 0.2em;
   font-size: initial;
@@ -11,4 +11,7 @@
   border-radius: 0.5em;
   color: #64e4ff;
   margin-left: 0.5em;
+  &:focus {
+    border-width: 0;
+  }
 }

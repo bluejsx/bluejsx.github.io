@@ -3,12 +3,11 @@ import '../declaration.d'
 import 'github-markdown-css'
 import 'highlight.js/styles/vs2015.css'
 import * as monaco from 'monaco-editor'
-import { main } from './Main.module.scss'
+import style, { main } from './Main.module.scss'
 import './container.scss'
 
 import exampleCode from '../examples/JSXDefault?raw'
 const {log} = console
-
 const Main = () =>
   <div class={`container ${main}`}>
     {async (elem: VJSX.JSX.Element)=>{
@@ -25,7 +24,7 @@ const Main = () =>
       const codeSpace = await import('./CodeSpace').then(Mod=>
         elem.querySelector('#example-codespace').appendChild(<Mod.default code={exampleCode}>
           <label for='code-options'> Coding style: </label>
-          <select id='code-options' ref={[refs, 'codeSelector']}>
+          <select id='code-options' class={style['code-options']} ref={[refs, 'codeSelector']}>
             <option value='0'>JSX</option>
             <option value='1'>JSX with ref attribute</option>
             <option value='2'>TSX</option>
