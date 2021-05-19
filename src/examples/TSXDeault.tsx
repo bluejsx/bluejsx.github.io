@@ -4,7 +4,7 @@ import { useAttr, ElemType } from '@vanillajsx/vjsx'
 const Example = ({ progValue = 0, children = null }) => {
 
   //declare elements
-  const btn = <button>click</button> as ElemType<'button'>
+  const btn = <button>click</button>
   const progress = <progress max={100} value={progValue} /> as ElemType<'progress'>
   const progText = new Text()
   const self = (
