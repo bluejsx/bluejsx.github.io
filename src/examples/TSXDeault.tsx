@@ -1,14 +1,14 @@
-import { useAttr } from '@vanillajsx/vjsx'
+import { useAttr, ElemType } from '@vanillajsx/vjsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children = null }) => {
 
   //declare elements
-  const progress = <progress max={100} value={progValue} />
-  const btn = <button>click</button>
+  const btn = <button>click</button> as ElemType<'button'>
+  const progress = <progress max={100} value={progValue} /> as ElemType<'progress'>
   const progText = new Text()
   const self = (
-    <div class='t3'>
+    <div>
       {btn}
       {progress}
       {progText}%
