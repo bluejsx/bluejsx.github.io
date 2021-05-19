@@ -56,6 +56,7 @@ const CodeSpace = ({ code='', lang='jsx', children }: { code?: string, lang?: st
     minimap: {
       enabled: false
     },
+    tabSize: 2,
     model: monaco.editor.getModel(langURI) || monaco.editor.createModel(code, 'typescript', langURI)
   })
   const runCode = () =>{
