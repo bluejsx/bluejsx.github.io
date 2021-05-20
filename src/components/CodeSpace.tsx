@@ -1,4 +1,5 @@
 import * as monaco from 'monaco-editor'
+let ts: typeof window.ts
 import ts from 'typescript/lib/typescriptServices'
 
 import './codespace.scss'
