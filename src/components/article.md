@@ -88,8 +88,6 @@ You can code using function component, or using [CustomElement](https://develope
 ### Code Example
 <div id='example-codespace'></div>
 
-- see how changing `self.progValue` affects other multiple values using `self.watch` method.
-
 ### For more details 
 
 Please see the [document](https://github.com/vanillajsx/VanillaJSX/tree/master/doc)
