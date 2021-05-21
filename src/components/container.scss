@@ -1,5 +1,5 @@
 :root {
-  --page-padding-side: 7vw;
+  --page-padding-side: max(7vw, 7vh);
 }
 .container {
   margin-top: var(--header-hight);
@@ -21,10 +21,10 @@
     display: block;
     //flex-direction: column;
     &:nth-child(1){
-      height: max( calc(100vh - 2 * var(--page-padding-side)) );
-      img[alt='logo'] {
-        background-color: transparent;
-        width: 200px;
+      //height: max( calc(100vh - 2 * var(--page-padding-side)) );
+      #logo_container {
+        width: 250px;
+        margin: auto;
       }
     }
     h1 {
@@ -55,7 +55,7 @@
     }
     .center {
       text-align: center;
-      flex: 1;
+      margin-top: 1em !important;
     }
     .boxed {
       padding: 2em;

@@ -1,6 +1,6 @@
 <div class='center'>
 
-![logo](./vjsx.svg)
+<div id='logo_container'></div>
 
 #  Welcome to VanillaJSX!
 

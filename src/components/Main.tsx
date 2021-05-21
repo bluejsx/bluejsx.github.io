@@ -4,6 +4,7 @@ import 'github-markdown-css'
 import 'highlight.js/styles/vs2015.css'
 import * as monaco from 'monaco-editor'
 import style, { main } from './Main.module.scss'
+import AnimationLogo from './AnimationLogo'
 import './container.scss'
 
 import exampleCode from '../examples/JSXDefault?raw'
@@ -18,6 +19,10 @@ const Main = () =>
           )
         )
       )
+      const logo = elem.querySelector('#logo_container').appendChild(<AnimationLogo />) as ReturnType<typeof AnimationLogo>
+      logo.pause()
+      logo.onmouseenter = () => logo.play()
+      logo.onclick = () => logo.play()
       const refs: {
         codeSelector?: HTMLSelectElement
       } = {}
@@ -31,10 +36,10 @@ const Main = () =>
             <option value='3'>TSX with ref attribute</option>
             <option value='4'>TSX + SVG + Animations</option>
           </select>
-        </Mod.default>)
+        </Mod.default>) as ReturnType<typeof Mod.default>
       )
       const { codeSelector } = refs
-      const { editor }: {editor: monaco.editor.IStandaloneCodeEditor} = codeSpace
+      const { editor } = codeSpace
       const JSXURI = monaco.Uri.parse('file:///main.jsx'), TSXURI = monaco.Uri.parse('file:///main.tsx'), 
       JSXModel = monaco.editor.getModel(JSXURI) || monaco.editor.createModel(null, 'typescript', JSXURI),
       TSXModel = monaco.editor.getModel(TSXURI) || monaco.editor.createModel(null, 'typescript', TSXURI)
