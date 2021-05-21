@@ -1,11 +1,11 @@
 import * as monaco from 'monaco-editor'
-let ts: typeof window.ts
 import ts from 'typescript/lib/typescriptServices'
 
 import './codespace.scss'
 import vjsxDCode from '@vanillajsx/vjsx/src/@types/vjsx.d?raw'
 import vjsxCode from '@vanillajsx/vjsx/src/vjsx?raw'
 import vjsxLibCode from '@vanillajsx/vjsx/src/vjsxlib?raw'
+const TS = ts as typeof window.ts;
 
 // compiler options
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
@@ -77,17 +77,17 @@ const CodeSpace = ({ code='', lang='jsx', children }: { code?: string, lang?: st
   
   return self as VJSX.JSX.Element & {editor: monaco.editor.IStandaloneCodeEditor}
 }
-//const ts = window.ts
+
 const compileTS = (code: string) => {
   code = code.replace(/import +(VJSX* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
   
-  return ts.transpile(code, {
-    jsx: ts.JsxEmit.React,
+  return TS.transpile(code, {
+    jsx: TS.JsxEmit.React,
     jsxFactory: 'VJSX.r',
     jsxFragmentFactory: 'VJSX.Fragment',
     lib: ["dom", "esnext"],
-    module: ts.ModuleKind.ESNext,
-    target: ts.ScriptTarget.ES2015,
+    module: TS.ModuleKind.ESNext,
+    target: TS.ScriptTarget.ES2015,
     removeComments: true
   })
   

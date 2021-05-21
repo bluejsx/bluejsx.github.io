@@ -17,10 +17,10 @@ const Example = () => {
           <stop ref={[refs, 'stopColor']} offset="99.16666666666667%" stop-opacity="1" style="stop-color:#000000"/>
         </linearGradient>
         <circle vector-effect="non-scaling-stroke" cx="128" cy="128" r="128" fill="url(#_lgradient_2)"/>
-        <line ref={[refs, 'line1']} x1='128' y1='223' x2='25' y2='71' stroke="white" stroke-width="10" stroke-linecap="round" />
-        <line ref={[refs, 'line2']} x1='128' y1='223' x2='231' y2='71' stroke="white" stroke-width="10" stroke-linecap="round" />
-        <line ref={[refs, 'line3']} x2='64' y2='33' x1='192' y1='222' stroke="white" stroke-width="10" stroke-linecap="round" />
-        <line ref={[refs, 'line4']} x2='192' y2='33' x1='64' y1='222' stroke="white" stroke-width="10" stroke-linecap="round" />
+        <line ref={[refs, 'line1']} x1='128' y1='223' x2='25' y2='71' stroke="white" stroke-linecap="round" />
+        <line ref={[refs, 'line2']} x1='128' y1='223' x2='231' y2='71' stroke="white" stroke-linecap="round" />
+        <line ref={[refs, 'line3']} x2='64' y2='33' x1='192' y1='222' stroke="white" stroke-linecap="round" />
+        <line ref={[refs, 'line4']} x2='192' y2='33' x1='64' y1='222' stroke="white" stroke-linecap="round" />
       </g>
     </svg>
   )
@@ -34,6 +34,7 @@ const Example = () => {
       },
       {
         strokeDasharray: '100% 0',
+        strokeWidth: 8,
       },
     ],
     {
