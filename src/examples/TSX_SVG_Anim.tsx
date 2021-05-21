@@ -33,7 +33,7 @@ const Example = () => {
       },
       {
         strokeDashoffset: 0,
-        offset: 0.1,
+        offset: 0.2,
       },
       {
         strokeDashoffset: 0,
@@ -62,7 +62,7 @@ const Example = () => {
       },
       {
         strokeDashoffset: 0,
-        offset: 0.4,
+        offset: 0.6,
       },
       {
         strokeDashoffset: 0,
