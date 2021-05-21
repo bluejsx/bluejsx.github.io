@@ -29,6 +29,7 @@ const Main = () =>
             <option value='1'>JSX with ref attribute</option>
             <option value='2'>TSX</option>
             <option value='3'>TSX with ref attribute</option>
+            <option value='4'>TSX + SVG + Animations</option>
           </select>
         </Mod.default>)
       )
@@ -59,6 +60,12 @@ const Main = () =>
             break;
           case '3':
             import('../examples/TSXWithRef?raw').then(({default: code})=>{
+              editor.setModel(TSXModel)
+              editor.setValue(code)
+            })
+            break;
+          case '4':
+            import('../examples/TSX_SVG_Anim?raw').then(({default: code})=>{
               editor.setModel(TSXModel)
               editor.setValue(code)
             })
