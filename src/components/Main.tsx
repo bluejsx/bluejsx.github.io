@@ -34,7 +34,7 @@ const Main = () =>
             <option value='1'>JSX with ref attribute</option>
             <option value='2'>TSX</option>
             <option value='3'>TSX with ref attribute</option>
-            <option value='4'>TSX + SVG + Animations</option>
+            <option value='4'>TSX + SVG Animation</option>
           </select>
         </Mod.default>) as ReturnType<typeof Mod.default>
       )

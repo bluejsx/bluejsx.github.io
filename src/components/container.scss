@@ -1,5 +1,5 @@
 :root {
-  --page-padding-side: max(7vw, 7vh);
+  --page-padding-side: max(4vw, 4vh);
 }
 .container {
   margin-top: var(--header-hight);
@@ -55,7 +55,7 @@
     }
     .center {
       text-align: center;
-      margin-top: 1em !important;
+      margin-top: 3em !important;
     }
     .boxed {
       padding: 2em;

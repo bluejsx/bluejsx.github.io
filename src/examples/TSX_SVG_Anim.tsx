@@ -12,11 +12,11 @@ const Example = () => {
   const self = (
     <svg viewBox="0 0 256 256" width="80%" height="80%">
       <g>
-        <linearGradient id="_lgradient_2" x1="0.5" y1="0" x2="0.5000000000000001" y2="1" gradientTransform="matrix(256,0,0,256,0,0)" gradientUnits="userSpaceOnUse">
-          <stop offset="1.6666666666666667%" stop-opacity="1" style="stop-color:rgb(0,0,0)"/>
-          <stop ref={[refs, 'stopColor']} offset="99.16666666666667%" stop-opacity="1" style="stop-color:#000000"/>
+        <linearGradient id="example_gradient" x1="0.5" y1="0" x2="0.5" y2="1" gradientTransform="matrix(256,0,0,256,0,0)" gradientUnits="userSpaceOnUse">
+          <stop offset="1.6666666666666667%" stop-opacity="1" stop-color="black"/>
+          <stop ref={[refs, 'stopColor']} offset="100%" stop-opacity="1" stop-color="#0000f5"/>
         </linearGradient>
-        <circle vector-effect="non-scaling-stroke" cx="128" cy="128" r="128" fill="url(#_lgradient_2)"/>
+        <circle vector-effect="non-scaling-stroke" cx="128" cy="128" r="128" fill="url(#example_gradient)"/>
         <line ref={[refs, 'line1']} x1='128' y1='223' x2='25' y2='71' stroke="white" stroke-linecap="round" stroke-width='8' stroke-dasharray='1 1' pathLength='1' />
         <line ref={[refs, 'line2']} x1='128' y1='223' x2='231' y2='71' stroke="white" stroke-linecap="round" stroke-width='8' stroke-dasharray='1 1' pathLength='1' />
         <line ref={[refs, 'line3']} x1='192' y1='222' x2='64' y2='33' stroke="white" stroke-linecap="round" stroke-width='8' stroke-dasharray='1 1' pathLength='1' />
@@ -78,10 +78,10 @@ const Example = () => {
       iterations: Infinity,
     }
   ]
-  line1.animate(...vLineAnimSetting).play()
-  line2.animate(...vLineAnimSetting).play()
-  line3.animate(...xLineAnimSetting).play()
-  line4.animate(...xLineAnimSetting).play()
+  line1.animate(...vLineAnimSetting)
+  line2.animate(...vLineAnimSetting)
+  line3.animate(...xLineAnimSetting)
+  line4.animate(...xLineAnimSetting)
   
   stopColor.animate([
     {
@@ -95,10 +95,10 @@ const Example = () => {
       stopColor: '#000000',
     },
   ], {
-    duration: duration,
+    duration,
     easing: 'ease-in-out',
     iterations: Infinity,
-  }).play()
+  })
 
   return self
 }
