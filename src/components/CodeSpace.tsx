@@ -32,8 +32,8 @@ monaco.languages.typescript.typescriptDefaults.addExtraLib(
   vjsxLibCode,
   'file:///node_modules/@vanillajsx/vjsx/vjsxlib.ts');
 
-const CodeSpace = ({ code='', lang='jsx', children }: { code?: string, lang?: string, children?: any[] })
-  : VJSX.JSX.Element & {editor: monaco.editor.IStandaloneCodeEditor} =>{
+const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] })
+  : VJSX.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor } => {
   const refs: {
     editorContainer?: HTMLDivElement,
     resultSpace?: HTMLDivElement,
@@ -43,12 +43,12 @@ const CodeSpace = ({ code='', lang='jsx', children }: { code?: string, lang?: st
     <div class='editor-options'>
       {children}
     </div>
-    <div ref={[refs, 'editorContainer']} class='editor-container'/>
+    <div ref={[refs, 'editorContainer']} class='editor-container' />
     <button ref={[refs, 'runButton']} class='run-button'>run ▶️</button>
     <div ref={[refs, 'resultSpace']} class='editor-result'></div>
   </div>
   const { editorContainer, resultSpace, runButton } = refs
-  const langURI = monaco.Uri.parse('file:///main.'+lang)
+  const langURI = monaco.Uri.parse('file:///main.' + lang)
   const editor = monaco.editor.create(editorContainer, {
     lineNumbers: 'off',
     scrollBeyondLastLine: false,
@@ -60,27 +60,27 @@ const CodeSpace = ({ code='', lang='jsx', children }: { code?: string, lang?: st
     tabSize: 2,
     model: monaco.editor.getModel(langURI) || monaco.editor.createModel(code, 'typescript', langURI)
   })
-  const runCode = () =>{
-    resultSpace.innerHTML=''
+  const runCode = () => {
+    resultSpace.innerHTML = ''
     import(/* @vite-ignore */
       'data:text/javascript;charset=utf-8,'
-      +encodeURIComponent(compileTS(editor.getValue()))
+      + encodeURIComponent(compileTS(editor.getValue()))
     ).then(Mod => resultSpace.appendChild(<Mod.default />))
   }
   runButton.onclick = runCode
   runCode()
 
   //self.editor = editor
-  Object.defineProperty(self, 'editor' ,{
+  Object.defineProperty(self, 'editor', {
     value: editor
   })
-  
-  return self as VJSX.JSX.Element & {editor: monaco.editor.IStandaloneCodeEditor}
+
+  return self as VJSX.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor }
 }
 
 const compileTS = (code: string) => {
   code = code.replace(/import +(VJSX* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
-  
+
   return TS.transpile(code, {
     jsx: TS.JsxEmit.React,
     jsxFactory: 'VJSX.r',
@@ -90,7 +90,7 @@ const compileTS = (code: string) => {
     target: TS.ScriptTarget.ES2015,
     removeComments: true
   })
-  
+
 }
 
 export default CodeSpace
