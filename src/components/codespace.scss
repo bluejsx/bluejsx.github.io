@@ -1,6 +1,10 @@
 .codespace {
   height: 700px;
   display: grid;
+  filter: none;
+  &.preparing {
+    filter: blur(1px) brightness(0.7);
+  }
   @media (min-width: 701px) {
     &{
       grid-template-rows: 2em calc(100% - 1.8em);

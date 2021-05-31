@@ -5,6 +5,7 @@ import 'highlight.js/styles/vs2015.css'
 import * as monaco from 'monaco-editor'
 import style, { main } from './Main.module.scss'
 import AnimationLogo from './AnimationLogo'
+import CodeSpace from './CodeSpace'
 import './container.scss'
 
 import exampleCode from '../examples/JSXDefault?raw'
@@ -26,18 +27,23 @@ const Main = () =>
       const refs: {
         codeSelector?: HTMLSelectElement
       } = {}
-      const codeSpace = await import('./CodeSpace').then(Mod=>
-        elem.querySelector('#example-codespace').appendChild(<Mod.default code={exampleCode}>
-          <label for='code-options'> Coding style: </label>
-          <select id='code-options' class={style['code-options']} ref={[refs, 'codeSelector']}>
-            <option value='0'>JSX</option>
-            <option value='1'>JSX with ref attribute</option>
-            <option value='2'>TSX</option>
-            <option value='3'>TSX with ref attribute</option>
-            <option value='4'>TSX + SVG Animation</option>
-          </select>
-        </Mod.default>) as ReturnType<typeof Mod.default>
-      )
+      const codeSpace = elem.querySelector('#example-codespace').appendChild(<CodeSpace code={exampleCode}>
+        <label for='code-options'> Coding style: </label>
+        <select id='code-options' class={style['code-options']} ref={[refs, 'codeSelector']}>
+          <option value='0'>JSX</option>
+          <option value='1'>JSX with ref attribute</option>
+          <option value='2'>TSX</option>
+          <option value='3'>TSX with ref attribute</option>
+          <option value='4'>TSX + SVG Animation</option>
+        </select>
+      </CodeSpace>) as ReturnType<typeof CodeSpace>
+      const onscroll = ()=>{
+        if(codeSpace.getBoundingClientRect().top<500){
+          codeSpace.init()
+          elem.removeEventListener('scroll', onscroll)
+        }
+      }
+      elem.addEventListener('scroll', onscroll)
       const { codeSelector } = refs
       const { editor } = codeSpace
       const JSXURI = monaco.Uri.parse('file:///main.jsx'), TSXURI = monaco.Uri.parse('file:///main.tsx'), 

@@ -1,5 +1,6 @@
 import './declaration.d'
 import './style.css'
+import 'module-workers-polyfill';
 import Header from './components/Header'
 import Main from './components/Main'
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
