@@ -66,7 +66,7 @@ export default {
 
 in your `tsconfig.json`/`jsconfig.json`
 
-```json5
+```json
 {
   /*
   ... your settings ...
