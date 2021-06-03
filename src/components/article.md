@@ -63,6 +63,20 @@ export default {
   //... other settings
 }
 ```
+
+in your `tsconfig.json`/`jsconfig.json`
+
+```json5
+{
+  /*
+  ... your settings ...
+  You would need to state "jsx" option of your choice
+  */
+  "jsxFactory": "VJSX.r",
+  "jsxFragmentFactory": "VJSX.Fragment"
+}
+```
+
 Then your JSX code would be interpreted as VanillaJSX! Have fun!
 
 ---
