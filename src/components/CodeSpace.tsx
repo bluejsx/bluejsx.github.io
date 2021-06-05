@@ -3,6 +3,36 @@ import * as monaco from 'monaco-editor'
 import './codespace.scss'
 
 
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+
+import { useAttr, AttrHolder, ElemType } from '@vanillajsx/vjsx'
+declare const VJSX: any
+
+globalThis.VJSX = VJSX;
+globalThis.useAttr = useAttr;
+globalThis.AttrHolder = AttrHolder;
+
+(self as any).MonacoEnvironment = {
+  getWorker(_: any, label: string) {
+    if (label === 'json') {
+      return new jsonWorker()
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker()
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker()
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker()
+    }
+    return new editorWorker()
+  }
+}
 // compiler options
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -19,11 +49,11 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 
 
 const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] })
-  : VJSX.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: ()=>void } => {
+  : VJSX.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: () => void } => {
   const refs: {
-    editorContainer?: HTMLDivElement,
-    resultSpace?: HTMLDivElement,
-    runButton?: HTMLElementTagNameMap['button']
+    editorContainer?: ElemType<'div'>,
+    resultSpace?: ElemType<'div'>,
+    runButton?: ElemType<'button'>
   } = {}
   const self = <div class='codespace preparing'>
     <div class='editor-options'>
@@ -53,8 +83,8 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
       value: editor
     },
     init: {
-      value: function(){
-        Promise.all([import('typescript/lib/typescriptServices.js'), import('@vanillajsx/vjsx/dist/index.d?raw')]).then(([{default: ts}, {default: vjsxDCode}])=>{
+      value: function () {
+        Promise.all([import('typescript/lib/typescriptServices.js'), import('@vanillajsx/vjsx/dist/index.d?raw')]).then(([{ default: ts }, { default: vjsxDCode }]) => {
           const TS = ts as typeof window.ts;
           self.classList.remove('preparing')
           // extra libraries
@@ -88,7 +118,7 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
   })
 
   return self as VJSX.JSX.Element & {
-    init: ()=>void
+    init: () => void
     editor: monaco.editor.IStandaloneCodeEditor
   }
 }
@@ -96,3 +126,30 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
 
 
 export default CodeSpace
+/*
+Promise.all([
+  import('monaco-editor/esm/vs/editor/editor.worker?worker'),
+  import('monaco-editor/esm/vs/language/json/json.worker?worker'),
+  import('monaco-editor/esm/vs/language/css/css.worker?worker'),
+  import('monaco-editor/esm/vs/language/html/html.worker?worker'),
+  import('monaco-editor/esm/vs/language/typescript/ts.worker?worker')
+]).then(([{ default: editorWorker }, { default: jsonWorker }, { default: cssWorker }, { default: htmlWorker }, { default: tsWorker }]) => {
+  (self as any).MonacoEnvironment = {
+    getWorker(_: any, label: string) {
+      if (label === 'json') {
+        return new jsonWorker()
+      }
+      if (label === 'css' || label === 'scss' || label === 'less') {
+        return new cssWorker()
+      }
+      if (label === 'html' || label === 'handlebars' || label === 'razor') {
+        return new htmlWorker()
+      }
+      if (label === 'typescript' || label === 'javascript') {
+        return new tsWorker()
+      }
+      return new editorWorker()
+    }
+  }
+});
+*/
