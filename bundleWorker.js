@@ -1,5 +1,4 @@
 import { buildSync } from 'esbuild'
-///** @type {import('vite')} */
 export default ()=>{
   return {
     name: 'vite-plugin-bundle-worker',
