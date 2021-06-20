@@ -5,7 +5,7 @@ export default ()=>{
     transform(_, id){
       if(/\?worker/.test(id)){
         id = id.replace(/\?[\w-]+/, '')
-        let code = buildSync({
+        const code = buildSync({
           bundle: true,
           entryPoints: [id],
           minify: true,
