@@ -60,7 +60,7 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
       {children}
     </div>
     <div ref={[refs, 'editorContainer']} class='editor-container' />
-    <button ref={[refs, 'runButton']} class='run-button'>run ▶️</button>
+    <button ref={[refs, 'runButton']} class='run-button'>Click to run ▶️</button>
     <div ref={[refs, 'resultSpace']} class='editor-result'></div>
   </div>
   const { editorContainer, resultSpace, runButton } = refs
@@ -84,8 +84,7 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
     },
     init: {
       value: function () {
-        Promise.all([import('typescript/lib/typescriptServices.js'), import('@vanillajsx/vjsx/dist/index.d?raw')]).then(([{ default: ts }, { default: vjsxDCode }]) => {
-          const TS = ts as typeof window.ts;
+        Promise.all([import('typescript'), import('@vanillajsx/vjsx/dist/index.d?raw')]).then(([{ default: TS }, { default: vjsxDCode }]) => {
           self.classList.remove('preparing')
           // extra libraries
           monaco.languages.typescript.typescriptDefaults.addExtraLib(

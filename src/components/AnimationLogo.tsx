@@ -27,52 +27,21 @@ const AnimationLogo = () => {
   const { stopColor, line1, line2, line3, line4 } = refs
   const duration = 1600
   const vLineAnimSetting: Parameters<typeof line1.animate> = [
-    [
-      {
-        strokeDashoffset: 2,
-      },
-      {
-        strokeDashoffset: 1,
-        offset: 0.1
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.4
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 1
-      },
-    ],
+    {
+      strokeDashoffset: [2, 1, 0, 0],
+      offset: [0, 0.1, 0.4, 1]
+    },
     {
       duration,
       easing: 'ease-in-out'
     }
   ]
   const xLineAnimSetting: Parameters<typeof line1.animate> = [
-    [
-      {
-        strokeDashoffset: 2,
-      },
-      {
-        strokeDashoffset: 1,
-        offset: 0.1
-      },
-      {
-        strokeDashoffset: 1,
-        easing: 'steps(1, end)',
-        offset: 0.2
-      },
-      {
-        strokeDashoffset: 1,
-        offset: 0.4,
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.7
-      },
-      
-    ],
+    {
+      strokeDashoffset: [2, 1, 1, 1, 0],
+      offset: [0, 0.1, 0.2, 0.4, 0.7],
+      easing: ['linear', 'step-end', 'ease-in-out']
+    },
     {
       duration,
       easing: 'ease-in-out'

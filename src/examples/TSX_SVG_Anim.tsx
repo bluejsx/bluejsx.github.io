@@ -27,23 +27,10 @@ const Example = () => {
   const { stopColor, line1, line2, line3, line4 } = refs
   const duration = 1600
   const vLineAnimSetting: Parameters<typeof line1.animate> = [
-    [
-      {
-        strokeDashoffset: 1,
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.2,
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.9,
-      },
-      {
-        strokeDashoffset: -1,
-        offset: 1
-      },
-    ],
+    {
+      strokeDashoffset: [1, 0, 0, -1],
+      offset: [0, 0.2, 0.9]
+    },
     {
       duration,
       easing: 'ease-in-out',
@@ -51,27 +38,10 @@ const Example = () => {
     }
   ]
   const xLineAnimSetting: Parameters<typeof line1.animate> = [
-    [
-      {
-        strokeDashoffset: 1,
-        easing: 'steps(1, end)'
-      },
-      {
-        strokeDashoffset: 1,
-        offset: 0.2,
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.6,
-      },
-      {
-        strokeDashoffset: 0,
-        offset: 0.9,
-      },
-      {
-        strokeDashoffset: -1,
-      },
-    ],
+    {
+      strokeDashoffset: [1, 1, 0, 0, -1],
+      offset: [0, 0.2, 0.6, 0.9],
+    },
     {
       duration,
       easing: 'ease-in-out',
@@ -83,18 +53,10 @@ const Example = () => {
   line3.animate(...xLineAnimSetting)
   line4.animate(...xLineAnimSetting)
   
-  stopColor.animate([
-    {
-      stopColor: '#000000',
-    },
-    {
-      stopColor: '#0000f5',
-      offset: 0.9
-    },
-    {
-      stopColor: '#000000',
-    },
-  ], {
+  stopColor.animate({
+    stopColor: ['#000000', '#0000f5', '#000000'],
+    offset: [0, 0.9]
+  }, {
     duration,
     easing: 'ease-in-out',
     iterations: Infinity,
