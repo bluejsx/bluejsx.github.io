@@ -1,4 +1,5 @@
 import mdLoader from './mdloader'
+import bundleWorker from './bundleWorker';
 import hljs from 'highlight.js'
 const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
@@ -14,7 +15,8 @@ export default ({
         return hljs.highlightAuto(code, [lang]).value
       }
     }),
-  ],
+    bundleWorker()
+  ],/*
   build: {
     rollupOptions: {
       output: {
@@ -27,7 +29,7 @@ export default ({
         },
       },
     },
-  },
+  },*/
   base: './',
   assetsInclude: 'public/*'
 })
