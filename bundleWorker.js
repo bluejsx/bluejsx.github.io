@@ -1,5 +1,4 @@
-import { transformSync, buildSync } from 'esbuild'
-import path from 'path'
+import { buildSync } from 'esbuild'
 ///** @type {import('vite')} */
 export default ()=>{
   return {
