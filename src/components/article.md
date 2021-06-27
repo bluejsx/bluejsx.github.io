@@ -104,7 +104,7 @@ You can code using function component, or using [CustomElement](https://develope
 
 ### For more details 
 
-Please see the [document](https://github.com/vanillajsx/VanillaJSX/tree/master/doc)
+Please see the [document](https://github.com/bluejsx/BlueJSX/tree/master/doc)
 
 ---
 
@@ -123,7 +123,7 @@ EventTarget.prototype.on = EventTarget.prototype.addEventListener
 
 ## Roadmap
 
-- [x] VanillaJSX processor
+- [x] BlueJSX processor
   - it dynamically appends components
 - [ ] Vite.js HMR Plugin
 - [ ] SSG builder

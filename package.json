@@ -1,7 +1,7 @@
 {
-  "name": "vjsx_page",
+  "name": "bluejsx_page",
   "version": "1.0.0",
-  "description": "vanilla.jsx homepage",
+  "description": "blue.jsx homepage",
   "main": "vite.config.js",
   "scripts": {
     "dev": "vite",
