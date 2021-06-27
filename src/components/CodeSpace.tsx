@@ -91,7 +91,7 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
             vjsxDCode,
             'file:///node_modules/bluejsx/index.d.ts');
           const compileTS = (code: string) => {
-            code = code.replace(/import +(Blue* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
+            code = code.replace(/import +(Blue* *,? *)?({? *[\w, ]+ *}?) +from +['"]bluejsx(\/\w*)*['"]/g, '')
             return TS.transpile(code, {
               jsx: TS.JsxEmit.React,
               jsxFactory: 'Blue.r',
