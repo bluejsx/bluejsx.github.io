@@ -2,7 +2,7 @@
 
 <div id='logo_container'></div>
 
-#  Welcome to VanillaJSX!
+#  Welcome to BlueJSX!
 
 ### Just a pure Javascript with JSX syntax.
 
@@ -49,16 +49,16 @@ elem1.append('hi!')
 ## Installation
 
 ```sh
-npm i -D @vanillajsx/vjsx
+npm i -D bluejsx
 ```
 ### for [vitejs](https://vitejs.dev/)
 in your `vite.config.js`:
 ```js
 export default {
   esbuild: {
-    jsxFactory: 'VJSX.r',
-    jsxFragment: 'VJSX.Fragment',
-    jsxInject: `import VJSX from '@vanillajsx/vjsx'`
+    jsxFactory: 'Blue.r',
+    jsxFragment: 'Blue.Fragment',
+    jsxInject: `import Blue from 'bluejsx'`
   },
   //... other settings
 }
@@ -72,8 +72,8 @@ in your `tsconfig.json`/`jsconfig.json`
   ... your settings ...
   You would need to state "jsx" option of your choice
   */
-  "jsxFactory": "VJSX.r",
-  "jsxFragmentFactory": "VJSX.Fragment"
+  "jsxFactory": "Blue.r",
+  "jsxFragmentFactory": "Blue.Fragment"
 }
 ```
 
@@ -85,7 +85,7 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 ### VanillaJSX provides:
 - `useAttr` method:
   ```ts
-  import { useAttr } from '@vanillajsx/vjsx'
+  import { useAttr } from 'bluejsx'
   useAttr(elem: Element, propName: string, defaultValue: any)
   ```
   - This defines custom property setter/getter on your element.

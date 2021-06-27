@@ -9,10 +9,10 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-import { useAttr, AttrHolder, ElemType } from '@vanillajsx/vjsx'
-declare const VJSX: any
+import { useAttr, AttrHolder, ElemType } from 'bluejsx'
+declare const Blue: any
 
-globalThis.VJSX = VJSX;
+globalThis.Blue = Blue;
 globalThis.useAttr = useAttr;
 globalThis.AttrHolder = AttrHolder;
 
@@ -41,7 +41,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   module: monaco.languages.typescript.ModuleKind.ESNext,
   noEmit: false,
   jsx: monaco.languages.typescript.JsxEmit.Preserve,
-  jsxFactory: 'VJSX.r',
+  jsxFactory: 'Blue.r',
   lib: ["dom", "esnext"],
   allowJs: true,
   typeRoots: ["node_modules"]
@@ -49,7 +49,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 
 
 const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] })
-  : VJSX.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: () => void } => {
+  : Blue.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: () => void } => {
   const refs: {
     editorContainer?: ElemType<'div'>,
     resultSpace?: ElemType<'div'>,
@@ -84,18 +84,18 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
     },
     init: {
       value: function () {
-        Promise.all([import('typescript'), import('@vanillajsx/vjsx/dist/index.d?raw')]).then(([{ default: TS }, { default: vjsxDCode }]) => {
+        Promise.all([import('typescript'), import('bluejsx/dist/index.d?raw')]).then(([{ default: TS }, { default: vjsxDCode }]) => {
           self.classList.remove('preparing')
           // extra libraries
           monaco.languages.typescript.typescriptDefaults.addExtraLib(
             vjsxDCode,
-            'file:///node_modules/@vanillajsx/vjsx/index.d.ts');
+            'file:///node_modules/bluejsx/index.d.ts');
           const compileTS = (code: string) => {
-            code = code.replace(/import +(VJSX* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
+            code = code.replace(/import +(Blue* *,? *)?({? *[\w, ]+ *}?) +from +['"]\@vanillajsx\/vjsx(\/\w*)*['"]/g, '')
             return TS.transpile(code, {
               jsx: TS.JsxEmit.React,
-              jsxFactory: 'VJSX.r',
-              jsxFragmentFactory: 'VJSX.Fragment',
+              jsxFactory: 'Blue.r',
+              jsxFragmentFactory: 'Blue.Fragment',
               lib: ["dom", "esnext"],
               module: TS.ModuleKind.ESNext,
               target: TS.ScriptTarget.ES2018,
@@ -116,7 +116,7 @@ const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?
     }
   })
 
-  return self as VJSX.JSX.Element & {
+  return self as Blue.JSX.Element & {
     init: () => void
     editor: monaco.editor.IStandaloneCodeEditor
   }

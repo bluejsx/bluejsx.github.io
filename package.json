@@ -22,7 +22,7 @@
   "homepage": "https://github.com/vanillajsx/homepage#readme",
   "devDependencies": {
     "@types/marked": "^2.0.3",
-    "@vanillajsx/vjsx": "^0.1.7",
+    "bluejsx": "^0.1.0",
     "gh-pages": "^3.2.2",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.7.3",
@@ -31,8 +31,5 @@
     "sass": "^1.35.1",
     "typescript": "^4.3.4",
     "vite": "^2.3.8"
-  },
-  "dependencies": {
-    "module-workers-polyfill": "^0.2.1"
   }
 }

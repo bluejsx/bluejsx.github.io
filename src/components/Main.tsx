@@ -1,4 +1,4 @@
-import '@vanillajsx/vjsx'
+import 'bluejsx'
 import '../declaration.d'
 import 'github-markdown-css'
 import 'highlight.js/styles/vs2015.css'
@@ -12,7 +12,7 @@ import exampleCode from '../examples/JSXDefault?raw'
 const {log} = console
 const Main = () =>
   <div class={`container ${main}`}>
-    {async (elem: VJSX.JSX.Element)=>{
+    {async (elem: Blue.JSX.Element)=>{
       await import('./article.md').then(mod=>
         mod.default.split('<hr>').forEach(htmStr=>
           elem.appendChild(

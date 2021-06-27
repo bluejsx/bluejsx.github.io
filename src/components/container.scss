@@ -6,7 +6,7 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(#178bb7, #4fa571);
+  background: linear-gradient(skyblue, #5bb980);
   //scroll-snap-type: y mandatory;
   overflow: scroll;
   font-size: 125%;
@@ -16,7 +16,7 @@
     padding: var(--page-padding-side);
     //padding-top: calc(var(--page-padding-side)/2);
     //scroll-snap-align: start;
-    color: white;
+    color: #2d4b71;
     overflow: hidden;
     display: block;
     //flex-direction: column;
@@ -32,6 +32,7 @@
     }
     code {
       background-color: rgb(27 31 35 / 55%);
+      color: #DCDCDC;
     }
     pre {
       background-color: #272727cc;
@@ -43,7 +44,7 @@
       padding-left: 1.5em;
     }
     a {
-      color: #2c05ff;
+      color: #d66b1e;
       &::after {
         content: '↗︎';
       }

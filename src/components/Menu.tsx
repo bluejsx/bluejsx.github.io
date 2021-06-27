@@ -1,4 +1,4 @@
-import { useAttr, ElemType } from '@vanillajsx/vjsx'
+import { useAttr, ElemType } from 'bluejsx'
 import './menu.scss'
 
 const contents = [

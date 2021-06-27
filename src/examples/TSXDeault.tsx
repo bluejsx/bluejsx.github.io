@@ -1,4 +1,4 @@
-import { useAttr, ElemType } from '@vanillajsx/vjsx'
+import { useAttr, ElemType } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children = null }) => {
