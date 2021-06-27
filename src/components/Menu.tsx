@@ -2,10 +2,10 @@ import { useAttr, ElemType } from 'bluejsx'
 import './menu.scss'
 
 const contents = [
-  ['View the Source Code of This Page', 'https://github.com/vanillajsx/vanillajsx.github.io'],
-  ['Document', 'https://github.com/vanillajsx/VanillaJSX/tree/master/doc'],
-  ['GitHub Repository', 'https://github.com/vanillajsx/VanillaJSX'],
-  ['Join Discussions', 'https://github.com/vanillajsx/VanillaJSX/discussions']
+  ['View the Source Code of This Page', 'https://github.com/bluejsx/bluejsx.github.io'],
+  ['Document', 'https://github.com/bluejsx/BlueJSX/tree/master/doc'],
+  ['GitHub Repository', 'https://github.com/bluejsx/BlueJSX'],
+  ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
 const Menu = () =>{
   const refs: {
