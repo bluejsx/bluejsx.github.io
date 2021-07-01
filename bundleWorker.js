@@ -1,7 +1,10 @@
 import { buildSync } from 'esbuild'
+
 export default ()=>{
+  /** @type import('vite').ResolvedConfig */
   let config
-  return {
+  /** @type import('vite').Plugin*/
+  return ({
     name: 'vite-plugin-bundle-worker',
     configResolved(resolvedConfig) {
       // store the resolved config
@@ -26,5 +29,5 @@ export default ()=>{
         }`
       }
     }
-  }
+  })
 }
