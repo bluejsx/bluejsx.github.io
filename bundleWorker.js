@@ -1,9 +1,14 @@
 import { buildSync } from 'esbuild'
 export default ()=>{
+  let config
   return {
     name: 'vite-plugin-bundle-worker',
+    configResolved(resolvedConfig) {
+      // store the resolved config
+      config = resolvedConfig
+    },
     transform(_, id){
-      if(/\?worker/.test(id)){
+      if(config.command === 'build' && /\?worker/.test(id)){
         id = id.replace(/\?[\w-]+/, '')
         const code = buildSync({
           bundle: true,
