@@ -21,6 +21,8 @@ jobs:
   build:
     executor: node/default
     steps:
+      - run:
+        node -v
       - checkout
       - attach_workspace:
           at: .
