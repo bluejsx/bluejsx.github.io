@@ -27,7 +27,9 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm --unsafe-perm=true install
+          command: 
+            - npm install
+            - npm config set unsafe-perm true
       - save_npm
   build:
     executor:
