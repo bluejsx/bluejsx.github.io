@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/workspace
     docker:
-      - image: node:latest
+      - image: circleci/node:latest
 commands:
   restore_npm:
     steps:
