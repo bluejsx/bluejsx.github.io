@@ -9,8 +9,8 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: 16.5.0
-         # npm-version: latest
+          node-version: 14.17.3
+          npm-version: 6.14.13
       - node/install-npm
       - node/install-packages:
           app-dir: 
