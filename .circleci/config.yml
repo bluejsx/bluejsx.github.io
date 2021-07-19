@@ -22,7 +22,8 @@ jobs:
     executor: node/default
     steps:
       - run:
-        node -v
+          name: check node version
+          command: node -v
       - checkout
       - attach_workspace:
           at: .
