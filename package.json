@@ -20,7 +20,7 @@
     "url": "https://github.com/bluejsx/homepage/issues"
   },
   "homepage": "https://github.com/bluejsx/homepage#readme",
-  "devDependencies": {
+  "dependencies": {
     "@types/marked": "^2.0.4",
     "bluejsx": "latest",
     "gh-pages": "^3.2.3",
