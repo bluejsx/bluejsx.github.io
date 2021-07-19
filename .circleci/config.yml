@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/workspace
     docker:
-      - image: node:15
+      - image: node:latest
 commands:
   restore_npm:
     steps:
@@ -24,12 +24,6 @@ jobs:
       name: default
     steps:
       - checkout
-      - run:
-          name: set-global-prefix
-          command: npm config set prefix '$HOME/.npm-global/'
-      - run:
-          name: update-npm
-          command: npm install -g npm@latest
       - run:
           name: Install dependencies
           command: 
