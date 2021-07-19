@@ -8,6 +8,8 @@ jobs:
     executor: node/default
     steps:
       - checkout
+      - node/install:
+          node-version: 15.13.0
       - node/install-npm
       - node/install-packages:
           app-dir: 
@@ -41,8 +43,6 @@ jobs:
 workflows:
   build&deploy:
     jobs:
-      - node/test:
-          version: 15.13.0
       - setup
       - build:
           requires:
