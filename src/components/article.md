@@ -9,14 +9,6 @@
 Code with pure Javascript, components, and JSX!
 </div>
 
-
-<div class='boxed' style='color: #d20c38; font-size: larger; padding: 0.3rem; border-color: red;'>
-
-### ⚠️Caution⚠️
-- This is still in Draft phase!
-
-</div>
-
 ---
 
 ### Features
@@ -82,23 +74,6 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 ---
 
 
-### VanillaJSX provides:
-- `useAttr` method:
-  ```ts
-  import { useAttr } from 'bluejsx'
-  useAttr(elem: Element, propName: string, defaultValue: any)
-  ```
-  - This defines custom property setter/getter on your element.
-  - You are able to listen the value change using watch listener:
-    ```ts
-    elem.watch(propName: string, (newValue) => void)
-    ```
-    - `watch` listener is similar to `addEventListener` 
-    - The difference is that the listener function in `watch` recieves the new property value, not `Event` object.
-  - The code example below shows the usage of `useAttr` and `watch`.
-
-You can code using function component, or using [CustomElement](https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements)
-
 ### Code Example
 <div id='example-codespace'></div>
 
@@ -130,5 +105,4 @@ EventTarget.prototype.on = EventTarget.prototype.addEventListener
   - it generates 
     - pre-rendered HTML
     - JS files which initializes the components
-  - [ViteJS SSG loader](https://vitejs.dev/guide/ssr.html#ssr-specific-plugin-logic)
 

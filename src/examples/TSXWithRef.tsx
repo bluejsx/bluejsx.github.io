@@ -19,25 +19,19 @@ const Example = ({ progValue = 0, children = null }) => {
   )
   const { btn, progress } = refs
   /*
-  below defines a property named 'progValue',
-  and when 'progValue' changes, 
-  all registered listeners will be executed.
+    below defines a property named 'progValue',
+    and when 'progValue' changes, 
+    all registered listeners will be executed.
   */
   useAttr(self, 'progValue', progValue)
 
-  // functionalities
-  //when `self.progValue` changed, run the following listener
+  //when `self.progValue` changes, run the following listener
   self.watch('progValue', v => {
     progress.value = v
     progText.data = v
   })
 
   btn.onclick = () => {
-    /*
-      below just looks assigning a value to a property,
-      however this is running getter/setter method,
-      which executes all registered listener functions via `watch` method.
-    */
     if (self.progValue < 100) self.progValue += 10
     else self.progValue = 0
   }

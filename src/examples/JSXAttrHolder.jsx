@@ -1,8 +1,9 @@
-import { useAttr } from 'bluejsx'
+import { useAttr, AttrHolder } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children = null }) => {
-
+  //create state holder
+  const state = new AttrHolder()
   //declare elements
   const refs = {}
   const progText = new Text()
@@ -15,22 +16,19 @@ const Example = ({ progValue = 0, children = null }) => {
     </div>
   )
   const { btn, progress } = refs
-  /*
-    below defines a property named 'progValue',
-    and when 'progValue' changes, 
-    all registered listeners will be executed.
-  */
-  useAttr(self, 'progValue', progValue)
 
-  //when `self.progValue` changes, run the following listener
-  self.watch('progValue', v => {
+  //create state
+  useAttr(state, 'progValue', progValue)
+
+  // when `state.progValue` changes, run the following listener
+  state.watch('progValue', v => {
     progress.value = v
     progText.data = v
   })
 
   btn.onclick = () => {
-    if (self.progValue < 100) self.progValue += 10
-    else self.progValue = 0
+    if (state.progValue < 100) state.progValue += 10
+    else state.progValue = 0
   }
 
   // return self element
