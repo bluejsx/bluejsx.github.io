@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: 15.13.0
+          node-version: latest
           npm-version: latest
       - node/install-npm
       - node/install-packages:
