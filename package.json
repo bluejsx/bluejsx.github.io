@@ -5,8 +5,8 @@
   "main": "vite.config.js",
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
-    "deploy": "npx gh-pages -d dist",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "buildeploy": "npm run build && npm run deploy",
     "serve": "vite preview"
   },
