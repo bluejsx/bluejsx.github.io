@@ -28,8 +28,9 @@ jobs:
       - run:
           name: Install dependencies
           command: 
-            - npm install
             - npm config set unsafe-perm true
+            - npm install
+            
       - save_npm
   build:
     executor:
