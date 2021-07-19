@@ -9,8 +9,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: latest
-          npm-version: latest
+          node-version: 14.17.3
       - node/install-npm
       - node/install-packages:
           app-dir: 
