@@ -2,19 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@4.5.1
 
-commands:
-  restore_npm:
-    steps:
-      - restore_cache:
-          name: Restore npm dependencies
-          key: npm-{{ checksum "package.json" }}
-  save_npm:
-    steps:
-      - save_cache:
-          name: Cache npm dependencies
-          key: npm-{{ checksum "package.json" }}
-          paths:
-            - ~/workspace/node_modules
 jobs:
   working_directory: ~/workspace
   setup:
@@ -23,7 +10,7 @@ jobs:
       - checkout
       - node/install-npm
       - node/install-packages:
-          app-dir: ~/workspace
+          app-dir: 
           cache-path: node_modules
           override-ci-command: npm i
       - persist_to_workspace:
