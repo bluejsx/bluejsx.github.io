@@ -4,6 +4,7 @@ version: 2.1
 
 executors:
   default:
+    working_directory: ~/workspace
     docker:
       - image: node:15
 commands:
@@ -28,8 +29,7 @@ jobs:
       - run:
           name: Install dependencies
           command: 
-            npm install
-            
+            npm i
       - save_npm
   build:
     executor:
