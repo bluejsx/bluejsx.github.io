@@ -9,9 +9,10 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: 14.17.3
-          npm-version: 6.14.13
-      - node/install-npm
+          lts: true
+      #    node-version: 14.17.3
+      #    npm-version: 6.14.13
+      #- node/install-npm
       - node/install-packages:
           app-dir: 
           cache-path: node_modules
