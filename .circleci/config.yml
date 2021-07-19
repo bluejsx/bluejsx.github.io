@@ -1,10 +1,7 @@
 version: 2.1
+orbs:
+  node: circleci/node:latest
 
-executors:
-  default:
-    working_directory: ~/workspace
-    docker:
-      - image: circleci/node:latest
 commands:
   restore_npm:
     steps:
@@ -19,36 +16,40 @@ commands:
           paths:
             - ~/workspace/node_modules
 jobs:
+  working_directory: ~/workspace
   setup:
-    executor:
-      name: default
+    executor: node/default
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: 
-            npm install
-      - save_npm
+      - node/install-npm
+      - node/install-packages:
+          app-dir: ~/workspace
+          cache-path: node_modules
+          override-ci-command: npm i
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   build:
     executor:
       name: default
     steps:
       - checkout
-      - restore_npm
+      - attach_workspace:
+          at: .
       - run: 
           name: Build
           command: npm run build
-      - save_npm
   deploy:
     executor:
       name: default
     steps:
       - checkout
-      - restore_npm
+      - attach_workspace:
+          at: .
       - run:
           name: Deploy
           command: npm run deploy
-      - save_npm
 workflows:
   build&deploy:
     jobs:
