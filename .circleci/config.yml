@@ -10,7 +10,7 @@ jobs:
       - checkout
       - node/install:
           node-version: 15.13.0
-          npm-version: 6.14.10
+          npm-version: latest
       - node/install-npm
       - node/install-packages:
           app-dir: 
