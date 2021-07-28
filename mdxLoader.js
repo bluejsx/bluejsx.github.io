@@ -1,7 +1,7 @@
 import jsx from 'jsx-transform'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *from *['"`][@A-z0-9\-\/\.?]*['"`];?/g
+const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *from *['"`][@A-z0-9\-\/\.?&]*['"`];?/g
 /**
  * 
  * @param {MarkdownIt.Options} options 
