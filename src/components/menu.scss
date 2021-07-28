@@ -21,6 +21,7 @@
   &.hidden {
     .menu-list {
       transform: translateX(var(--popup-width));
+      user-select: none;
     }
     #backfield {
       opacity: 0;

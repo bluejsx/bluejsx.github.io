@@ -1,62 +1,78 @@
 :root {
   --page-padding-side: max(4vw, 4vh);
 }
+
 .container {
-  margin-top: var(--header-hight);
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(skyblue, #9adeb5);
+  margin-top           : var(--header-hight);
+  position             : absolute;
+  height               : fit-content;
+  background           : linear-gradient(skyblue, #9adeb5);
+  background-attachment: fixed;
   //scroll-snap-type: y mandatory;
-  overflow: scroll;
-  font-size: 125%;
-  text-align: left;
-  section {
-    width: calc( 100vw - 2 * var(--page-padding-side));
-    padding: var(--page-padding-side);
-    //padding-top: calc(var(--page-padding-side)/2);
-    //scroll-snap-align: start;
-    color: #2d4b71;
-    overflow: hidden;
-    display: block;
-    //flex-direction: column;
-    &:nth-child(1){
-      //height: max( calc(100vh - 2 * var(--page-padding-side)) );
-      #logo_container {
-        width: 250px;
-        margin: auto;
-      }
-    }
-    h1 {
-      font-size: xxx-large;
-    }
+  overflow             : scroll;
+  //font-size: 125%;
+  text-align           : left;
+  //  section {
+  width                : calc(100vw - 2 * var(--page-padding-side));
+  padding              : var(--page-padding-side);
+  //padding-top: calc(var(--page-padding-side)/2);
+  //scroll-snap-align: start;
+  color                : #2d4b71;
+  display              : block;
+
+  //flex-direction: column;
+  //&:nth-child(1){
+  //
+  #logo {
+    width : min(50vw, 250px);
+    margin: auto;
+  }
+
+  //}
+  h1 {
+    font-size: xxx-large;
+  }
+
+  hr {
+    height: 0;
+    margin: 80px 0;
+  }
+
+  code {
+    background-color: rgb(27 31 35 / 55%);
+    color           : #DCDCDC;
+  }
+
+  pre {
+    background-color: #272727cc;
+
     code {
-      background-color: rgb(27 31 35 / 55%);
-      color: #DCDCDC;
-    }
-    pre {
-      background-color: #272727cc;
-      code {
-        background-color: transparent;
-      }
-    }
-    .markdown-body ul {
-      padding-left: 1.5em;
-    }
-    a {
-      color: #d66b1e;
-      &::after {
-        content: '↗︎';
-      }
-    }
-    .bottom {
-      top: auto;
-      bottom: 0;
-      position: relative;
-    }
-    .center {
-      text-align: center;
-      margin-top: 3em !important;
+      background-color: transparent;
     }
   }
+
+  .markdown-body ul {
+    padding-left: 1.5em;
+  }
+
+  a {
+    color: #d66b1e;
+
+    &::after {
+      content: '↗︎';
+    }
+  }
+
+  .bottom {
+    top     : auto;
+    bottom  : 0;
+    position: relative;
+  }
+
+  .center {
+    text-align  : center;
+    //margin-top: 3em !important;
+  }
+
+  //}
 }

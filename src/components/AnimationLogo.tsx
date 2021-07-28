@@ -81,6 +81,9 @@ const AnimationLogo = () => {
       },
     }
   })
+  self.pause()
+  self.onmouseenter = () => self.play()
+  self.onclick = () => self.play()
   return self as unknown as ElemType<'svg'> & { play: ()=>void, pause: ()=>void }
 }
 export default AnimationLogo

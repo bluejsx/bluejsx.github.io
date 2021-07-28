@@ -1,6 +1,7 @@
 import mdLoader from './mdloader'
+import mdxToJS from './mdxLoader';
 import bundleWorker from './bundleWorker';
-import hljs from 'highlight.js'
+
 const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
 export default ({
@@ -13,8 +14,10 @@ export default ({
     mdLoader({
       highlight: function (code, lang) {
         return hljs.highlightAuto(code, [lang]).value
-      }
+      },
+      html: true
     }),
+    mdxToJS(),
     bundleWorker()
   ],/*
   build: {

@@ -1,13 +1,20 @@
-import marked from 'marked'
-
+import MarkdownIt from 'markdown-it'
+/**
+ * 
+ * @param {MarkdownIt.Options} options 
+ * @returns 
+ */
 export default function mdLoader(options){
-  marked.setOptions(options||{})
+  
+  const md = new MarkdownIt('commonmark', options)
   return {
     name: 'vite-plugin-md-loader',
     transform(code, id){
-      if(/\.md/.test(id)){
-        return `export default\`${marked(code).replace(/`/g,'\\`')}\``
+      if(/\.md$/.test(id)){
+        return `export default\`${md.render(code).replace(/`/g,'\\`')}\``
       }
     }
   }
 }
+//marked.setOptions(options||{})
+//marked(code).replace(/`/g,'\\`')}\``

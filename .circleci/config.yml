@@ -9,10 +9,8 @@ jobs:
     steps:
       - checkout
       - node/install:
-          #lts: true
           node-version: 16.5.0
           npm-version: 7.19.1
-      #- node/install-npm
       - node/install-packages:
           app-dir: 
           cache-path: node_modules
@@ -33,12 +31,25 @@ jobs:
       - run: 
           name: Build
           command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   deploy:
     executor: node/default
     steps:
       - checkout
       - attach_workspace:
           at: .
+      - add_ssh_keys:
+          fingerprints:
+            97:59:82:36:fc:b3:0a:92:c5:eb:9d:0e:65:05:32:b4
+      - run:
+          name: log in github
+          command: |
+            git config --global user.email "ichigomomiji436@gmail.com"
+            git config --global user.name "Momijiichigo"
+      
       - run:
           name: Deploy
           command: npm run deploy
