@@ -1,5 +1,5 @@
 import mdLoader from './mdloader'
-import mdxToJS from './mdxLoader';
+import mdxLoader from './mdxLoader';
 import bundleWorker from './bundleWorker';
 
 const prefix = `monaco-editor/esm/vs`;
@@ -17,7 +17,7 @@ export default ({
       },
       html: true
     }),
-    mdxToJS(),
+    mdxLoader(),
     bundleWorker()
   ],/*
   build: {

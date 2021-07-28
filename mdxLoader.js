@@ -7,7 +7,7 @@ const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *fro
  * @param {MarkdownIt.Options} options 
  * @returns {import('vite').PluginOption}
  */
-export default function mdxToJS(options = {}) {
+export default function mdxLoader(options = {}) {
   /** @type {import('vite').ResolvedConfig} */
   let config
   const md = new MarkdownIt({
