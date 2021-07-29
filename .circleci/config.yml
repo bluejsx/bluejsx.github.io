@@ -22,12 +22,12 @@ jobs:
   build:
     executor: node/default
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: check node version
           command: node -v
       - checkout
-      - attach_workspace:
-          at: .
       - run: 
           name: Build
           command: npm run build
@@ -56,7 +56,11 @@ jobs:
 workflows:
   build&deploy:
     jobs:
-      - setup
+      - setup:
+          filters:
+            branches:
+              only:
+                - master
       - build:
           requires:
             - setup
