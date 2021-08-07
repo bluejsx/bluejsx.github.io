@@ -7,8 +7,8 @@ jobs:
       - image: cimg/node:16.6.0
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+#      - setup_remote_docker:
+#          docker_layer_caching: true
       - run:
           name: install libraries
           command: npm i
@@ -23,8 +23,6 @@ jobs:
       - attach_workspace:
           at: .
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run: 
           name: Build
           command: npm run build
@@ -37,8 +35,6 @@ jobs:
       - image: cimg/node:16.6.0
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - attach_workspace:
           at: .
       - add_ssh_keys:
