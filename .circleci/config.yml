@@ -27,6 +27,7 @@ jobs:
       - checkout
       - node/install:
           node-version: 16.5.0
+          npm-version: 7.19.1
       - run: 
           name: Build
           command: npm run build
