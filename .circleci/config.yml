@@ -39,7 +39,7 @@ jobs:
           at: .
       - add_ssh_keys:
           fingerprints:
-            97:59:82:36:fc:b3:0a:92:c5:eb:9d:0e:65:05:32:b4
+            44:e4:26:f1:51:c8:42:7e:be:28:7b:e8:09:88:e3:a6
       - run:
           name: log in github
           command: |
