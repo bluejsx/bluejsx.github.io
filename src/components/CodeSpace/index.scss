@@ -6,7 +6,7 @@
     text-shadow: none;
   }
   &.preparing {
-    filter: blur(1px) brightness(0.7);
+    filter: blur(1px);
   }
   @media (min-width: 701px) {
     &{
@@ -51,25 +51,24 @@
     .run-button {
       grid-row: 3;
       grid-column: 1;
-      background-color: #8ec22e !important;
     }
   }
   .editor-options {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #287277;
-    color: #64e4ff;
+    background-color: #3c6488;
+    color: #f7eada;
   }
   .run-button {
     font-size: 1.2em;
     border-width: 0;
-    background-color: #2ec2a2;
-    color: #226c71;
+    background-color: #8cab7c;
+    color: #4d5f44;
     cursor: pointer;
     &:active {
-      background-color: #2c7f94;
-      color: #1d97cf;
+      background-color: #4d5f44;
+      color: #8cab7c;
     }
   }
   .editor-result {
