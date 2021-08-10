@@ -57,6 +57,8 @@ workflows:
             branches:
               only:
                 - main
+              ignore:
+                - gh-pages
       - build:
           requires:
             - setup

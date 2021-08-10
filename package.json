@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "gh-pages -d dist --message \"[skip ci] Updates\"",
+    "deploy": "gh-pages -d dist",
     "buildeploy": "npm run build && npm run deploy",
     "serve": "vite preview"
   },
