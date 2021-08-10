@@ -2,6 +2,9 @@
   height: 700px;
   display: grid;
   filter: none;
+  ::selection {
+    text-shadow: none;
+  }
   &.preparing {
     filter: blur(1px) brightness(0.7);
   }

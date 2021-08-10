@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 
-import './codespace.scss'
+import './index.scss'
 
 
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'

@@ -1,10 +1,10 @@
 import 'bluejsx'
-import '../declaration.d'
+import '../../declaration.d'
 import 'github-markdown-css'
 import 'highlight.js/styles/vs2015.css'
-import article from './article.mdx'
+import article from '../article.mdx'
 
-import { main as CLASS_MAIN } from './Main.module.scss'
+import { main as CLASS_MAIN } from './index.module.scss'
 
 import './container.scss'
 

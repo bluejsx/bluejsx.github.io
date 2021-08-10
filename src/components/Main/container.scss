@@ -3,10 +3,9 @@
 }
 
 .container {
-  margin-top           : var(--header-hight);
   position             : absolute;
   height               : fit-content;
-  background           : linear-gradient(skyblue, #9adeb5);
+  background           : #21374b;
   background-attachment: fixed;
   //scroll-snap-type: y mandatory;
   //font-size: 125%;
@@ -14,9 +13,10 @@
   //  section {
   width                : calc(100vw - 2 * var(--page-padding-side));
   padding              : var(--page-padding-side);
+  padding-top           : var(--header-hight);
   //padding-top: calc(var(--page-padding-side)/2);
   //scroll-snap-align: start;
-  color                : #2d4b71;
+  color                : #e7dacb;
   display              : block;
 
   //flex-direction: column;
@@ -28,9 +28,7 @@
   }
 
   //}
-  h1 {
-    font-size: xxx-large;
-  }
+
 
   hr {
     height: 0;
@@ -70,7 +68,8 @@
 
   .center {
     text-align  : center;
-    //margin-top: 3em !important;
+    margin: 80px 0 120px 0;
+    font-size: max(18px, min(20px, 1.8vw));
   }
 
   //}

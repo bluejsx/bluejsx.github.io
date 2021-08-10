@@ -1,5 +1,6 @@
 :root {
-  --header-hight: 60px
+  --header-hight: 60px;
+  --text-color-1: #a6c9ff;
 }
 body {
   color: white;
@@ -11,4 +12,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
+}
+::selection {
+  text-shadow: 0px 0px .18em currentColor, 0px 0px .09em currentColor;
+  mix-blend-mode: hard-light;
 }

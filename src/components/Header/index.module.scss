@@ -5,9 +5,10 @@ header {
   height: var(--header-hight);
   top:0px;
   left: 0px;
-  border-bottom: white 1px solid;
   font-size: calc( var(--header-hight) * 0.66);
-  background-color: black;
+  background-color: #16283ae0;
+  backdrop-filter: blur(2px);
+  user-select: none;
   z-index: 10000;
   .title {
     position: absolute;
@@ -18,8 +19,5 @@ header {
     margin: auto;
     width: fit-content;
     height: fit-content;
-    &::selection {
-      text-shadow: 0px 0px 7px #46b2ff, 0px 0px 4px #aadcff, 0px 0px 3px #c9e9ff;
-    }
   }
 }

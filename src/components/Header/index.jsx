@@ -1,5 +1,5 @@
-import Menu from './Menu'
-import {title} from './Header.module.scss'
+import Menu from '../Menu'
+import {title} from './index.module.scss'
 
 const { log } = console
 const Header = () =>(
