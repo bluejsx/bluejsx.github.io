@@ -1,10 +1,11 @@
+import withPages from './withPagesPlugin';
 import mdLoader from './mdloader'
 import mdxLoader from './mdxLoader';
 import bundleWorker from './bundleWorker';
 
 const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
-export default ({
+export default withPages({
   esbuild: {
     jsxFactory: 'Blue.r',
     jsxFragment: 'Blue.Fragment',
@@ -19,7 +20,11 @@ export default ({
     }),
     mdxLoader(),
     bundleWorker()
-  ],/*
+  ],
+  base: './',
+  assetsInclude: 'public/*'
+  
+})/*
   build: {
     rollupOptions: {
       output: {
@@ -33,6 +38,3 @@ export default ({
       },
     },
   },*/
-  base: './',
-  assetsInclude: 'public/*'
-})

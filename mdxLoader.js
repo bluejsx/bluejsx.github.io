@@ -27,12 +27,14 @@ export default function mdxLoader(options = {}) {
     transform(code, id) {
       if (/\.mdx$/.test(id)) {
         code = md.render(code)
+        //imports
         let imports = ''
         code = code.replace(regImports, (match)=>{
           imports += match + ';'
           return ''
         })
-        return `${imports}import Blue from 'bluejsx';export default ${jsx.fromString(`<div>${code}</div>`, {
+        //---
+        return `${imports}import Blue from 'bluejsx';export default ()=>${jsx.fromString(`<div>${code}</div>`, {
           factory: 'Blue.r',
           passUnknownTagsToFactory: true,
         })}`

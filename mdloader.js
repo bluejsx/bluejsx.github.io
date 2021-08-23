@@ -11,7 +11,7 @@ export default function mdLoader(options){
     name: 'vite-plugin-md-loader',
     transform(code, id){
       if(/\.md$/.test(id)){
-        return `export default\`${md.render(code).replace(/`/g,'\\`')}\``
+        return `export default ()=>{const d=document.createElement('div');d.innerHTML=\`${md.render(code).replace(/`/g,'\\`')}\`;return d}`
       }
     }
   }
