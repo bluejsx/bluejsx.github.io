@@ -38,7 +38,6 @@ async function restartServer(server) {
   }
 }
 
-const SRC_ENTRY_DIR = './node_modules/.blue-pages'
 /**
  * 
  * @param {import('vite').UserConfig} config 
@@ -50,16 +49,19 @@ export default function withPages(config) {
 
   /** directory where `vite.config.js` is located */
   const projectRoot = resolve(require.main.path, '../../../')
-  //const projectRoot = resolve(__dirname, '../../')
-  console.log(projectRoot)
-
-  const outDir = resolve(projectRoot, SRC_ENTRY_DIR)
-  const outPagesDir = resolve(outDir, './pages')
-  //clean old html sources
-  fs.rmdirSync(outPagesDir, { recursive: true })
+  //console.log(projectRoot)
 
   /** original `pages` folder in project */
   const srcPagesDir = resolve(projectRoot, './pages')
+
+  /** path of entry html files */
+  const outDir = resolve(projectRoot, './node_modules/.blue-pages')
+  const outPagesDir = resolve(outDir, './pages')
+
+  //clean old html sources
+  fs.rmdirSync(outPagesDir, { recursive: true })
+
+  
   //get pages tree
   const tree = dirTree(srcPagesDir, {
     extensions: /\.(md|mdx|js|jsx|ts|tsx)$/,
@@ -101,9 +103,11 @@ export default function withPages(config) {
   config.plugins.push({
     name: 'with-pages-listen-dir', // required, will show up in warnings and errors
     async configureServer(server) {
-      //server.watcher.add('pages/')
-      //await restartServer(server)
-      //server.config.root = 'withPagesPlugin/pages'
+      const { watcher } = server
+      watcher.add(srcPagesDir)
+      watcher.on('add', (path, stats)=>{
+        if(path.includes(srcPagesDir)) restartServer(server)
+      })
     }
   })
 
@@ -126,8 +130,6 @@ export default function withPages(config) {
   
   config.root = outPagesDir
   config.build.outDir = relative(outPagesDir, resolve(projectRoot, './dist'))
-  console.log(config.root)
-  console.log(config.build.outDir);
 
   return config
 }
