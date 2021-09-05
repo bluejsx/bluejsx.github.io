@@ -12,12 +12,7 @@ export default withPages({
     jsxInject: `import Blue from 'bluejsx'`
   },
   plugins: [
-    mdLoader({
-      highlight: function (code, lang) {
-        return hljs.highlightAuto(code, [lang]).value
-      },
-      html: true
-    }),
+    mdLoader(),
     mdxLoader(),
     bundleWorker()
   ],

@@ -75,12 +75,17 @@ Then your JSX code would be interpreted as VanillaJSX! Have fun!
 
 ---
 
-importExampleEditorfrom '../src/components/ExampleEditor'
-importexampleCodefrom '../src/examples/JSXDefault?raw'
-
 ### Code Example
 
-{`<ExampleEditor code={'{'}exampleCode{'}'} />`}
+```jsx
+import ExampleEditor from '../src/components/ExampleEditor'
+import exampleCode from '../src/examples/JSXDefault?raw'
+
+
+
+
+<ExampleEditor code={exampleCode} />
+```
 
 ---
 
