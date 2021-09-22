@@ -1,4 +1,4 @@
-import { useAttr, ElemType } from 'bluejsx'
+import { useAttr, RefType } from 'bluejsx'
 import './menu.scss'
 
 const contents = [
@@ -8,10 +8,10 @@ const contents = [
   ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
 const Menu = () =>{
-  const refs: {
-    toggleButton?: ElemType<'div'>,
-    backField?: ElemType<'div'>
-  } = {}
+  const refs: RefType<{
+    toggleButton: 'div'
+    backField: 'div'
+  }> = {}
   const self = (
     <div class='menu_list_container hidden'>
       <div ref={[refs, 'toggleButton']} id='h-menu-button'>

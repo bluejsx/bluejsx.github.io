@@ -1,12 +1,12 @@
-import { ElemType } from "bluejsx"
+import { RefType } from "bluejsx"
 import CodeSpace from "../CodeSpace"
 import * as monaco from 'monaco-editor'
 import { codeOptions as CLASS_CODE_OPTIONS } from './index.module.scss'
 
 export default ({ code, scrollingElement = document }: { code?: string, scrollingElement?: HTMLElement | any,[key: string]: any}) => {
-  const refs: {
-    codeSelector?: ElemType<'select'>
-  } = {}
+  const refs: RefType<{
+    codeSelector: 'select'
+  }> = {}
   const self = <CodeSpace code={code} >
     <label for='code-options'> Coding style: </label>
     <select id='code-options' class={CLASS_CODE_OPTIONS} ref={[refs, 'codeSelector']}>

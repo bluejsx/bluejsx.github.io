@@ -9,7 +9,7 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-import { useAttr, AttrHolder, ElemType } from 'bluejsx'
+import { useAttr, AttrHolder, RefType } from 'bluejsx'
 declare const Blue: any
 
 globalThis.Blue = Blue;
@@ -50,11 +50,11 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 
 const CodeSpace = ({ code = '', lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] })
   : Blue.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: () => void } => {
-  const refs: {
-    editorContainer?: ElemType<'div'>,
-    resultSpace?: ElemType<'div'>,
-    runButton?: ElemType<'button'>
-  } = {}
+  const refs: RefType<{
+    editorContainer: 'div',
+    resultSpace: 'div',
+    runButton: 'button'
+  }> = {}
   const self = <div class='codespace preparing'>
     <div class='editor-options'>
       {children}
