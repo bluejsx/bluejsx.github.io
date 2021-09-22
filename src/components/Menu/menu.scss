@@ -49,10 +49,7 @@
       height: 5px;
       border-radius: 5px;
       background-color: var(--text-color-1);
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      inset: 0;
       margin: auto;
       transition: 0.2s ease-out;
       &:nth-child(1) {
