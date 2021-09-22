@@ -2,19 +2,21 @@ import withPages from './withPagesPlugin';
 import mdLoader from './mdloader'
 import mdxLoader from './mdxLoader';
 import bundleWorker from './bundleWorker';
-
+import HMRLoader from './experiment_hmr/hmr'
 const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
 export default withPages({
   esbuild: {
+    jsx: "preserve",
     jsxFactory: 'Blue.r',
     jsxFragment: 'Blue.Fragment',
     jsxInject: `import Blue from 'bluejsx'`
   },
-  plugins: [
-    mdLoader(),
+  plugins: [HMRLoader()
+,    mdLoader(),
     mdxLoader(),
-    bundleWorker()
+    bundleWorker(),
+    
   ],
   base: './',
   assetsInclude: 'public/*'

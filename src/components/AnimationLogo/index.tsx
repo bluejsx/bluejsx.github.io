@@ -1,14 +1,14 @@
-import { ElemType } from 'bluejsx'
+import { ElemType, RefType } from 'bluejsx'
 
-const AnimationLogo = () => {
+export default () => {
 
-  const refs: {
-    stopColor?: ElemType<'stop'>
-    line1?: ElemType<'line'>
-    line2?: ElemType<'line'>
-    line3?: ElemType<'line'>
-    line4?: ElemType<'line'>
-  } = {}
+  const refs: RefType<{
+    stopColor: 'stop'
+    line1: 'line'
+    line2: 'line'
+    line3: 'line'
+    line4: 'line'
+  }> = {}
   const self = (
     <svg viewBox="0 0 256 256" width="80%" height="80%">
       <g>
@@ -86,4 +86,4 @@ const AnimationLogo = () => {
   self.onclick = () => self.play()
   return self as unknown as ElemType<'svg'> & { play: ()=>void, pause: ()=>void }
 }
-export default AnimationLogo
+//export default AnimationLogo

@@ -1,4 +1,4 @@
-import { useAttr, ElemType } from 'bluejsx'
+import { useAttr, ElemType, RefType } from 'bluejsx'
 import './menu.scss'
 
 const contents = [
@@ -7,11 +7,11 @@ const contents = [
   ['GitHub Repository', 'https://github.com/bluejsx/BlueJSX'],
   ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
-const Menu = () =>{
-  const refs: {
-    toggleButton?: ElemType<'div'>,
-    backField?: ElemType<'div'>
-  } = {}
+export default () =>{
+  const refs: RefType<{
+    toggleButton: 'div'
+    backField: 'div'
+  }> = {}
   const self = (
     <div class='menu_list_container hidden'>
       <div ref={[refs, 'toggleButton']} id='h-menu-button'>
@@ -43,4 +43,4 @@ const Menu = () =>{
   toggleButton.onclick = () => self.open = !self.open
   return self
 }
-export default Menu
+//export default Menu

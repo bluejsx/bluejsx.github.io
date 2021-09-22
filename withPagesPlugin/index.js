@@ -49,14 +49,12 @@ export default function withPages(config) {
     //output html
     const outHTMLPath = resolve(outFilePath, `./${fileName}.html`)
     console.log(relativePath);
-    /*import Page from '${srcPagesDir}/_app';*/
-    fs.writeFileSync(resolve(outFilePath, `./${fileName}.js`), `import Component from '${path}';import('${srcPagesDir}/_app').then(({default: Page})=>document.querySelector('#app').appendChild(Page({Component})))`)
+    fs.writeFileSync(resolve(outFilePath, `./${fileName}.js`), `import Component from '${relative(outFilePath, path)}';import('${relative(outFilePath, srcPagesDir)}/_app').then(({default: Page})=>document.querySelector('#app').appendChild(Page({Component,pageProps:{}})))`)
     const html = fs.readFileSync(`${srcPagesDir}/_template.html`, 'utf-8').replace('</body', `<script type="module" src="./${fileName}.js"></script></body`)
     fs.writeFileSync(outHTMLPath, html)
     //fs.copyFileSync(`${srcPagesDir}/_template.html`, outHTMLPath)
     entries[relativePath.replace(/\//,'_').replace(/.[\w]+$/, '')] = outHTMLPath
   })
-
   config.plugins ??= []
   /*
   const virtualTreeId = '@virtual:pages-tree'
