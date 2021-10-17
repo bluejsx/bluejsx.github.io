@@ -1,14 +1,10 @@
 import mdLoader from './mdloader'
-import mdxLoader from './mdxLoader';
 import bundleWorker from './bundleWorker';
-
-const prefix = `monaco-editor/esm/vs`;
-/** @type {import('vite').UserConfig} */
-export default ({
-  esbuild: {
-    jsxFactory: 'Blue.r',
-    jsxFragment: 'Blue.Fragment',
-    jsxInject: `import Blue from 'bluejsx'`
+import withBlueJSX from 'vite-with-bluejsx'
+// const prefix = `monaco-editor/esm/vs`;
+export default withBlueJSX({
+  bluejsx: {
+    hmr: true
   },
   plugins: [
     mdLoader({
@@ -17,7 +13,6 @@ export default ({
       },
       html: true
     }),
-    mdxLoader(),
     bundleWorker()
   ],/*
   build: {

@@ -5,7 +5,7 @@ declare module '*.md' {
   export default content
 }
 declare module '*.mdx' {
-  const content: Blue.JSX.Element
+  const content: ()=> Blue.JSX.Element
   export default content
 }
 declare module '*?raw' {
