@@ -33,6 +33,7 @@
     "vite": "^2.4.4"
   },
   "devDependencies": {
+    "acorn": "^8.5.0",
     "vite-with-bluejsx": "^1.0.0"
   }
 }

@@ -1,6 +1,7 @@
 import mdLoader from './mdloader'
 import bundleWorker from './bundleWorker';
 import withBlueJSX from 'vite-with-bluejsx'
+//import HMRAdder from './hmr'
 // const prefix = `monaco-editor/esm/vs`;
 export default withBlueJSX({
   bluejsx: {
@@ -13,7 +14,8 @@ export default withBlueJSX({
       },
       html: true
     }),
-    bundleWorker()
+    bundleWorker(),
+    //HMRAdder()
   ],/*
   build: {
     rollupOptions: {

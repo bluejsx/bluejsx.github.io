@@ -1,6 +1,6 @@
 import { ElemType, RefType } from 'bluejsx'
 
-const AnimationLogo = () => {
+export default () => {
 
   const refs: RefType<{
     stopColor: 'stop'
@@ -86,4 +86,4 @@ const AnimationLogo = () => {
   self.onclick = () => self.play()
   return self as unknown as ElemType<'svg'> & { play: ()=>void, pause: ()=>void }
 }
-export default AnimationLogo
+//export default AnimationLogo
