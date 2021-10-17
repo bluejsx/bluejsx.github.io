@@ -25,7 +25,7 @@ export default function withPages(config) {
   const outPagesDir = resolve(outDir, './pages')
 
   //clean old html sources
-  fs.rmdirSync(outPagesDir, { recursive: true })
+  fs.rmSync(outPagesDir, { recursive: true })
 
   
   //get pages tree

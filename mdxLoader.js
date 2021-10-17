@@ -1,6 +1,7 @@
 import jsx from 'jsx-transform'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+import { hmrAdder } from '@bluejsx/vite-plugin-blue-hmr'
 const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *from *['"`][:@A-z0-9\-\/\.?&]*['"`];?/g
 /**
  * 
@@ -34,10 +35,17 @@ export default function mdxLoader(options = {}) {
           return ''
         })
         //---
-        return `${imports}import Blue from 'bluejsx';export default ()=>${jsx.fromString(`<div>${code}</div>`, {
+        code = `${imports}import Blue from 'bluejsx';export default ()=>${jsx.fromString(`<div>${code}</div>`, {
           factory: 'Blue.r',
           passUnknownTagsToFactory: true,
         })}`
+        console.log(config.mode);
+        if(config.mode==='development'){
+          //console.log('hiixs');
+          return hmrAdder.transform(code, id)
+        }else {
+          return code
+        }
       }
     }
   }

@@ -1,27 +1,18 @@
 import withPages from './withPagesPlugin';
 import mdLoader from './mdloader'
-import mdxLoader from './mdxLoader';
 import bundleWorker from './bundleWorker';
-import HMRLoader from './experiment_hmr/hmr'
+import withBlueJSX from 'vite-with-bluejsx'
 const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
-export default withPages({
-  esbuild: {
-    jsx: "preserve",
-    jsxFactory: 'Blue.r',
-    jsxFragment: 'Blue.Fragment',
-    jsxInject: `import Blue from 'bluejsx'`
-  },
-  plugins: [HMRLoader()
-,    mdLoader(),
-    mdxLoader(),
+export default withPages(withBlueJSX({
+  plugins: [
+    mdLoader(),
     bundleWorker(),
-    
   ],
   base: './',
   assetsInclude: 'public/*'
   
-})/*
+}))/*
   build: {
     rollupOptions: {
       output: {
