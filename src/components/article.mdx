@@ -43,19 +43,18 @@ elem1.append('hi!')
 ## Installation
 
 ```sh
-npm i bluejsx
+npm i bluejsx vite-with-bluejsx
 ```
 ### for [vitejs](https://vitejs.dev/)
 in your `vite.config.js`:
 ```js
-export default {
-  esbuild: {
-    jsxFactory: 'Blue.r',
-    jsxFragment: 'Blue.Fragment',
-    jsxInject: `import Blue from 'bluejsx'`
-  },
-  //... other settings
-}
+import withBlueJSX from 'vite-with-bluejsx'
+export default withBlueJSX({
+  bluejsx: {
+    hmr: true //HMR is currently experimental. Set false for always reload the page.
+  }
+  //... your vite config
+})
 ```
 
 in your `tsconfig.json`/`jsconfig.json`
