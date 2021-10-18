@@ -287,19 +287,39 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
     }
     getExportedFunctions(body) {
         const funcNodes = [];
-        const filterFuncs = (node)=>{
-            if (node.type === 'FunctionDeclaration' || node.type === 'ArrowFunctionExpression') funcNodes.push(node);
-            else if (node.type === 'VariableDeclaration') node.declarations.forEach((v)=>filterFuncs(v.init)
-            );
+        const namesToLookFor = [];
+        const filterFuncs = (node, checkName = false)=>{
+            const { type  } = node;
+            if (!checkName && type === 'FunctionDeclaration' || type === 'ArrowFunctionExpression') {
+                funcNodes.push(node);
+            } else if (type === 'VariableDeclaration') {
+                if (checkName) {
+                    node.declarations.forEach((declaration)=>{
+                        if (namesToLookFor.includes(declaration.id.name)) {
+                            filterFuncs(declaration.init);
+                        }
+                    });
+                } else {
+                    node.declarations.forEach((declaration)=>filterFuncs(declaration.init)
+                    );
+                }
+            } else if (type === 'Identifier') namesToLookFor.push(node.name);
         };
-        body.forEach((v)=>{
-            if (v.type === 'ExportDefaultDeclaration' || v.type === 'ExportNamedDeclaration') {
-                const { declaration  } = v;
+        for(let i = body.length; i--;){
+            const bNode = body[i];
+            if (bNode.type === 'ExportDefaultDeclaration' || bNode.type === 'ExportNamedDeclaration') {
+                const { declaration , specifiers  } = bNode;
                 if (declaration) {
                     filterFuncs(declaration);
+                } else {
+                    specifiers.forEach((specifier)=>{
+                        filterFuncs(specifier.local);
+                    });
                 }
+            } else if (namesToLookFor.length) {
+                filterFuncs(bNode, true);
             }
-        });
+        }
         return funcNodes;
     }
     /** returns list of  */ getDependentJSXComponents(code, imports) {

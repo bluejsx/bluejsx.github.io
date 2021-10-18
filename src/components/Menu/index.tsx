@@ -7,8 +7,7 @@ const contents = [
   ['GitHub Repository', 'https://github.com/bluejsx/BlueJSX'],
   ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
-//const Menu = 
-export default () =>{
+const Menu =  () =>{
   const refs: RefType<{
     toggleButton: 'div'
     backField: 'div'
@@ -44,4 +43,4 @@ export default () =>{
   toggleButton.onclick = () => self.open = !self.open
   return self
 }
-//export default Menu
+export default Menu
