@@ -3,7 +3,7 @@ import CodeSpace from "../CodeSpace"
 import * as monaco from 'monaco-editor'
 import { codeOptions as CLASS_CODE_OPTIONS } from './index.module.scss'
 
-export default ({ code, scrollingElement = document }: { code?: string, scrollingElement?: HTMLElement | any,[key: string]: any}) => {
+export default ({ code, scrollingElement = document }: { code?: string, scrollingElement?: HTMLElement | any, [key: string]: any }) => {
   const refs: RefType<{
     codeSelector: 'select'
   }> = {}
@@ -21,7 +21,7 @@ export default ({ code, scrollingElement = document }: { code?: string, scrollin
   </CodeSpace> as ReturnType<typeof CodeSpace>
   const { codeSelector } = refs
   const { editor } = self
-  
+
   const onscroll = () => {
     if (self.getBoundingClientRect().top < 500) {
       self.init()

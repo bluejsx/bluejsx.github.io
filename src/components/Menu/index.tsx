@@ -7,7 +7,7 @@ const contents = [
   ['GitHub Repository', 'https://github.com/bluejsx/BlueJSX'],
   ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
-const Menu =  () =>{
+const Menu = () => {
   const refs: RefType<{
     toggleButton: 'div'
     backField: 'div'
@@ -19,9 +19,9 @@ const Menu =  () =>{
         <span></span>
       </div>
       <div class='menu-list'>{
-        contents.map(v=>{
+        contents.map(v => {
           const link = <p>{v[0]}</p>
-          link.onclick = () =>window.open(v[1])
+          link.onclick = () => window.open(v[1])
           return link
         })
       }</div>
@@ -32,10 +32,10 @@ const Menu =  () =>{
   const { toggleButton, backField } = refs
 
   useAttr(self, 'open', false)
-  self.watch('open', v=>{
-    if(v){
+  self.watch('open', v => {
+    if (v) {
       self.classList.remove('hidden')
-    }else{
+    } else {
       self.classList.add('hidden')
     }
   })
