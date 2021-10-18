@@ -18,7 +18,7 @@ class HMRAdderAcorn extends HMRAdderBase {
         const imports = this.getImports(program.body, path);
         const exportedFuncs = this.getExportedFunctions(program.body);
         const insertRecord = this.getInsertRecord();
-        exportedFuncs.forEach((funcNode)=>{
+        for (const funcNode of exportedFuncs){
             const { start , end  } = funcNode;
             const funcCode = this.getCodeFragment([
                 start,
@@ -30,7 +30,7 @@ class HMRAdderAcorn extends HMRAdderBase {
                 start,
                 end
             ], code, insertRecord);
-        });
+        }
         return code;
     }
     /////////////////
@@ -50,19 +50,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
 }
 `;
     }
-    /*
-  ${jsxComponent.attrObjCode ? 
-    `for(const key in ${jsxComponent.attrObjCode}){
-      const prop = props[key]
-      if(key==='ref') continue
-      else if(isSVG || ONLY_VIA_SET_ATTRIBUTE.has(key) || key.includes('-')){
-        element.setAttribute(key, prop)
-      } else {
-        //let's see if there would be any problem with IDL attr
-        element[key] = prop
-      }
-    }`: ''}
-*/ processFunctionCode(jsxComponents, funcNode, funcCode, wholeCode) {
+    processFunctionCode(jsxComponents, funcNode, funcCode, wholeCode) {
         const insertRecord = this.getInsertRecord();
         const originalFuncCode = funcCode;
         const bodyNode = funcNode.body;
@@ -114,7 +102,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                 }
             }
         }
-        jsxComponents.forEach((jsxComponent)=>{
+        for (const jsxComponent of jsxComponents){
             const attrNode = jsxComponent.node.arguments[1] // null | { attr: value }
             ;
             if (attrNode.type === 'ObjectExpression') {
@@ -129,13 +117,13 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                     jsxComponent.hasRef = true;
                     if (!isDirectJSXArrowReturnFunc) {
                         // take any statements which uses updated components
-                        bodyNodes.forEach(({ type , start , end  })=>{
+                        for (const { type , start , end  } of bodyNodes){
                             const relStart = start - funcNode.start, relEnd = end - funcNode.start;
                             const statement = originalFuncCode.substring(relStart, relEnd);
                             if (type === 'ExpressionStatement' && originalFuncCode.indexOf(jsxComponent.refName, relStart) === relStart) {
                                 updateInitializeLines += `${refObjectName}.${statement};`;
                             }
-                        });
+                        }
                         //find ref object name (refs)
                         for (const v of originalFuncCode.matchAll(new RegExp(jsxComponent.refName, 'g'))){
                             try {
@@ -171,7 +159,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                     this.addHotListenerInfo(hotListenerInfo, jsxComponent, refObjectName, '');
                 });
             }
-        });
+        }
         if (!refObjectName) {
             refObjectName = 'refs';
             insertCodeToFirstLine += `const ${refObjectName}={};`;
@@ -231,7 +219,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                 const filenames = fs.readdirSync(dPath);
                 for(let i = filenames.length; i--;){
                     const filename = filenames[i];
-                    if (/index\.[jt]sx$/.test(filename)) return filepath + '/' + filename;
+                    if (/index\.(?:[jt]sx|mdx?)$/.test(filename)) return filepath + '/' + filename;
                 }
             } else {
                 if (stat.isFile()) return filepath;
@@ -243,7 +231,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
             const parentDirName = path.dirname(filepath);
             for(let i = filenames.length; i--;){
                 const filename = filenames[i];
-                if (filenames.indexOf(targetFileName) === 0 && /\.[jt]sx$/.test(filename)) return parentDirName + '/' + filename;
+                if (filenames.indexOf(targetFileName) === 0 && /\.(?:[jt]sx|mdx?)$/.test(filename)) return parentDirName + '/' + filename;
             }
         }
         return false;
@@ -254,17 +242,17 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
             info: {
             }
         };
-        body.forEach((v)=>{
-            if (v.type !== 'ImportDeclaration' || v.source.value.indexOf('.') !== 0) return 0;
-            const resolvedImportPath = this.resolveFilePath(v.source.value, filepath);
-            if (!resolvedImportPath) return 0;
+        for (const node of body){
+            if (node.type !== 'ImportDeclaration' || node.source.value.indexOf('.') !== 0) continue;
+            const resolvedImportPath = this.resolveFilePath(node.source.value, filepath);
+            if (!resolvedImportPath) continue;
             const info = {
                 src: resolvedImportPath,
                 imports: {
                 }
             };
-            imports.info[v.source.value] = info;
-            v.specifiers.forEach((specifier)=>{
+            imports.info[node.source.value] = info;
+            for (const specifier of node.specifiers){
                 let name = specifier.local.name;
                 if (specifier.type === 'ImportDefaultSpecifier') {
                     //info.imports.default = name
@@ -277,8 +265,8 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                     name,
                     info
                 });
-            });
-        });
+            }
+        }
         return imports;
     }
     getExports(body) {
@@ -294,14 +282,13 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                 funcNodes.push(node);
             } else if (type === 'VariableDeclaration') {
                 if (checkName) {
-                    node.declarations.forEach((declaration)=>{
+                    for (const declaration of node.declarations){
                         if (namesToLookFor.includes(declaration.id.name)) {
                             filterFuncs(declaration.init);
                         }
-                    });
+                    }
                 } else {
-                    node.declarations.forEach((declaration)=>filterFuncs(declaration.init)
-                    );
+                    for (const declaration of node.declarations)filterFuncs(declaration.init);
                 }
             } else if (type === 'Identifier') namesToLookFor.push(node.name);
         };
@@ -334,7 +321,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                 blueCallNode = blueCallNode.expressions.find((v)=>v.start === blueCallNode.start
                 );
             }
-            imports.varNames.forEach((i)=>{
+            for (const i of imports.varNames){
                 if (i.name === compName) {
                     const importedJSXData = {
                         name: compName,
@@ -344,7 +331,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                     };
                     jsxInfo.push(importedJSXData);
                 }
-            });
+            }
         }
         return jsxInfo;
     }

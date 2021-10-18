@@ -10,7 +10,6 @@ import './container.scss'
 
 
 const { log } = console
-/* const Main = */
-export default () => <Article class={`container markdown-body ${CLASS_MAIN}`} />
+const Main = () => <Article class={`container markdown-body ${CLASS_MAIN}`} />
 
-//export default Main
+export default Main
