@@ -39,6 +39,11 @@ const Menu = () => {
       self.classList.add('hidden')
     }
   })
+  // if (import.meta.hot) {
+  //   import.meta.hot.accept((newModule) => {
+  //     console.log(newModule)
+  //   })
+  // }
   backField.onclick = () => self.open = false
   toggleButton.onclick = () => self.open = !self.open
   return self

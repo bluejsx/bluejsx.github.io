@@ -1,7 +1,8 @@
 import jsx from 'jsx-transform'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *from *['"`][@A-z0-9\-\/\.?&]*['"`];?/g
+import { hmrAdder } from '@bluejsx/vite-plugin-blue-hmr'
+const regImports = /import +(?:[A-z0-9]*,? *)?(?:{ *(?:[A-z0-9]* *,?)* *})? *from *['"`][:@A-z0-9\-\/\.?&]*['"`];?/g
 /**
  * 
  * @param {MarkdownIt.Options} options 
@@ -27,15 +28,24 @@ export default function mdxLoader(options = {}) {
     transform(code, id) {
       if (/\.mdx$/.test(id)) {
         code = md.render(code)
+        //imports
         let imports = ''
         code = code.replace(regImports, (match)=>{
           imports += match + ';'
           return ''
         })
-        return `${imports}import Blue from 'bluejsx';export default ${jsx.fromString(`<div>${code}</div>`, {
+        //---
+        code = `${imports}import Blue from 'bluejsx';export default ()=>${jsx.fromString(`<div>${code}</div>`, {
           factory: 'Blue.r',
           passUnknownTagsToFactory: true,
         })}`
+        console.log(config.mode);
+        if(config.mode==='development'){
+          //console.log('hiixs');
+          return hmrAdder.transform(code, id)
+        }else {
+          return code
+        }
       }
     }
   }

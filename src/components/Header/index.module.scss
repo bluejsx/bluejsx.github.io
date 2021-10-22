@@ -12,10 +12,7 @@ header {
   user-select: none;
   z-index: 10000;
   .title {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: fit-content;
-    height: fit-content;
+    display: inline-block;
+    vertical-align: middle;
   }
 }
