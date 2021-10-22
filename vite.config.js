@@ -6,7 +6,7 @@ export default withPages({
   plugins: [
     bundleWorker(),
   ],
-  base: './',
+  base: '/',
   assetsInclude: 'public/*'
   
 })
