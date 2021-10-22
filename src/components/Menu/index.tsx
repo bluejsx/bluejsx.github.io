@@ -3,7 +3,7 @@ import './menu.scss'
 
 const contents = [
   ['View the Source Code of This Page', 'https://github.com/bluejsx/bluejsx.github.io'],
-  ['Document', './docs/'],
+  ['Document', '/docs/'],
   ['GitHub Repository', 'https://github.com/bluejsx/BlueJSX'],
   ['Join Discussions', 'https://github.com/bluejsx/BlueJSX/discussions']
 ]
