@@ -1,10 +1,9 @@
-import withPages from './withPagesPlugin';
+import withPages from 'vite-with-blue-pages'
+//import withPages from 'AA/lib/index.cjs';
 import mdLoader from './mdloader'
 import bundleWorker from './bundleWorker';
-import withBlueJSX from 'vite-with-bluejsx'
-const prefix = `monaco-editor/esm/vs`;
 /** @type {import('vite').UserConfig} */
-export default withPages(withBlueJSX({
+export default withPages({
   plugins: [
     mdLoader(),
     bundleWorker(),
@@ -12,17 +11,4 @@ export default withPages(withBlueJSX({
   base: './',
   assetsInclude: 'public/*'
   
-}))/*
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          jsonWorker: [`${prefix}/language/json/json.worker`],
-          cssWorker: [`${prefix}/language/css/css.worker`],
-          htmlWorker: [`${prefix}/language/html/html.worker`],
-          tsWorker: [`${prefix}/language/typescript/ts.worker`],
-          editorWorker: [`${prefix}/editor/editor.worker`],
-        },
-      },
-    },
-  },*/
+})

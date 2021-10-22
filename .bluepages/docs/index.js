@@ -1,0 +1,1 @@
+import Component from '../../pages/docs/index.mdx';import('../../pages/_app').then(({default: Page})=>document.querySelector('#app').appendChild(Page({Component,pageProps:{}})))

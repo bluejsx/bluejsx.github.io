@@ -33,7 +33,8 @@
     "monaco-editor": "^0.24.0",
     "sass": "^1.37.5",
     "typescript": "^4.3.5",
-    "vite": "^2.4.4"
+    "vite": "^2.4.4",
+    "vite-with-blue-pages": "^1.0.0"
   },
   "devDependencies": {
     "@bluejsx/vite-plugin-blue-hmr": "^0.0.6",
