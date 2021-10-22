@@ -1,7 +1,7 @@
 declare module '*.scss';
 declare module '*.css';
 declare module '*.md' {
-  const content: string
+  const content: ()=> Blue.JSX.Element
   export default content
 }
 declare module '*.mdx' {
