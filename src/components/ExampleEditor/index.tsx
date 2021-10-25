@@ -3,11 +3,11 @@ import CodeSpace from "../CodeSpace"
 import * as monaco from 'monaco-editor'
 import { codeOptions as CLASS_CODE_OPTIONS } from './index.module.scss'
 
-export default ({ code, scrollingElement = document }: { code?: string, scrollingElement?: HTMLElement | any, [key: string]: any }) => {
+export default ({ code, /* document = document.document */ }: { code?: string, document?: Element, [key: string]: any }) => {
   const refs: RefType<{
     codeSelector: 'select'
   }> = {}
-  const self = <CodeSpace code={code} >
+  const self = <CodeSpace>
     <label for='code-options'> Coding style: </label>
     <select id='code-options' class={CLASS_CODE_OPTIONS} ref={[refs, 'codeSelector']}>
       <option value='0'>JSX</option>
@@ -21,20 +21,27 @@ export default ({ code, scrollingElement = document }: { code?: string, scrollin
   </CodeSpace> as ReturnType<typeof CodeSpace>
   const { codeSelector } = refs
   const { editor } = self
-
-  const onscroll = () => {
-    if (self.getBoundingClientRect().top < 500) {
-      self.init()
-      scrollingElement.removeEventListener('scroll', onscroll)
-    }
-  }
-  scrollingElement.addEventListener('scroll', onscroll)
   const JSXURI = monaco.Uri.parse('file:///main.jsx'), TSXURI = monaco.Uri.parse('file:///main.tsx'),
     JSXModel = monaco.editor.getModel(JSXURI) || monaco.editor.createModel(null, 'typescript', JSXURI),
     TSXModel = monaco.editor.getModel(TSXURI) || monaco.editor.createModel(null, 'typescript', TSXURI)
+  const onscroll = () => {
+    if (self.getBoundingClientRect().top < 500) {
+      self.init()
+      applyCode(code, JSXModel)
+      
+      document.scrollingElement.scrollTo({
+        top: self.offsetTop-200,
+        left: 0,
+        behavior: 'smooth'
+      })
+      document.removeEventListener('scroll', onscroll)
+    }
+  }
+  document.addEventListener('scroll', onscroll)
+
   const applyCode = (code: string, model: monaco.editor.ITextModel) => {
-    editor.setModel(model)
-    editor.setValue(code)
+    self.editor.setModel(model)
+    self.editor.setValue(code)
   }
   codeSelector.onchange = async () => {
     switch (codeSelector.value) {

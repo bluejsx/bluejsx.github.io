@@ -9,7 +9,7 @@ class HMRAdderAcorn extends HMRAdderBase {
         this.Parser = Parser;
     }
     transform(code, path) {
-        code = code.replace(/=>/g, '=> ');
+        code = code.replace(/=>/g, '=> ').replace(/Blue\.r\(([A-Z]\w*)[ \n]*\)/g, 'Blue.r($1, null)');
         const program = this.Parser.parse(code, {
             ecmaVersion: 'latest',
             sourceType: "module"
@@ -37,10 +37,14 @@ class HMRAdderAcorn extends HMRAdderBase {
     addHotListenerInfo(hotListenerInfo, jsxComponent, refObjectName, updateInitializeLines) {
         (_hotListenerInfo = hotListenerInfo)[jsxComponent.info.src] ?? (_hotListenerInfo[jsxComponent.info.src] = {
             varMapCode: '',
-            listenCode: ''
+            listenCode: '',
+            usedCompNames: []
         });
         const o = hotListenerInfo[jsxComponent.info.src];
-        o.varMapCode += `${jsxComponent.info.imports[jsxComponent.name]}:${jsxComponent.name},`;
+        if (!o.usedCompNames.includes(jsxComponent.name)) {
+            o.varMapCode += `${jsxComponent.info.imports[jsxComponent.name]}:${jsxComponent.name},`;
+            o.usedCompNames.push(jsxComponent.name);
+        }
         o.listenCode += `
 if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
   ${refObjectName}.${jsxComponent.refName}=${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}(${jsxComponent.name}, ${jsxComponent.attrObjCode ? jsxComponent.attrObjCode : 'null'});
@@ -167,6 +171,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
         for(let i = execLater.length; i--;){
             execLater[i]();
         }
+        let insertCodeBeforeHotListener = '';
         if (isDirectJSXArrowReturnFunc) {
             insertCodeToFirstLine = `{${insertCodeToFirstLine}const ${selfVarName}=`;
             funcCode = this.insertCode(`\nreturn ${selfVarName};}`, bodyNode.end, funcCode, insertRecord, true);
@@ -174,9 +179,9 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
             const selfCode = this.getCodeFragment([
                 retNode.start - funcNode.start + 6,
                 retNode.end - funcNode.start
-            ], funcCode, insertRecord);
-            insertCodeToFirstLine = `${insertCodeToFirstLine}
-      const ${selfVarName}=${selfCode};`;
+            ], funcCode, insertRecord) //wholeCode.substring(retNode.start + 6, retNode.end)
+            ;
+            insertCodeBeforeHotListener = `const ${selfVarName}=${selfCode}`;
             funcCode = this.replaceCode(`\nreturn ${selfVarName};`, [
                 retNode.start - funcNode.start,
                 retNode.start - funcNode.start + selfCode.length + 7
@@ -195,19 +200,21 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
     ${selfVarName}.remove();
     return newElem
   }\n`;
-        let listenerAdded = false;
+        //let listenerAdded = false
         for(const src in hotListenerInfo){
-            listenerAdded || (listenerAdded = true);
+            //listenerAdded || (listenerAdded = true)
             const listenerData = hotListenerInfo[src];
             hotListenerCode += `import.meta.hot.accept('${src}',({${listenerData.varMapCode}})=>{${listenerData.listenCode}});`;
         }
-        if (listenerAdded) {
-            hotListenerCode = `\nif(import.meta.hot){
+        //if (listenerAdded) {
+        hotListenerCode = `
+${insertCodeBeforeHotListener}
+if(import.meta.hot){
   ${hotListenerCode}
 }else{
   console.warn('import.meta.hot does not exist')
 }\n`;
-        }
+        //}
         funcCode = this.insertCode(hotListenerCode, insertHotListenerPlace, funcCode, insertRecord);
         return funcCode;
     }

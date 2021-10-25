@@ -1,5 +1,10 @@
 declare module '*.scss';
 declare module '*.css';
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.md' {
   const content: ()=> Blue.JSX.Element
   export default content

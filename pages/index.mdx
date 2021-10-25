@@ -104,13 +104,18 @@ import exampleCode from '../src/examples/JSXDefault?raw'
 
 ---
 
+import Roadmap, { Milestone } from '../src/components/RoadMap'
+
 ## Roadmap
 
-- [x] BlueJSX processor
-  - it dynamically appends components
-- [ ] Vite.js HMR Plugin
-- [ ] SSG builder
-  - it generates 
-    - pre-rendered HTML
-    - JS files which initializes the components
-
+<Roadmap>
+  <Milestone title='BlueJSX processor' status='done'>
+    it dynamically appends components
+  </Milestone>
+  <Milestone title='Vite.js HMR Plugin' status='experimental'>
+    HMR updates the DOM without reloading the whole page
+  </Milestone>
+  <Milestone title='SSG builder' status='future'>
+    it generates pre-rendered HTML and JS files
+  </Milestone>
+</Roadmap>
