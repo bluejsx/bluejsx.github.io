@@ -1,13 +1,10 @@
-import"./vendor.ee5cca48.js";var n=`import { useAttr, RefType } from 'bluejsx'
+import"./vendor.df3fb09e.js";var n=`import { useAttr } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children = null }) => {
 
   //declare elements
-  const refs: RefType<{
-    btn: 'button'
-    progress: 'progress'
-  }> = {}
+  const refs = {}
   const progText = new Text()
   const self = (
     <div>

@@ -1,20 +1,21 @@
-import"./vendor.ee5cca48.js";var n=`import { useAttr } from 'bluejsx'
+import"./vendor.df3fb09e.js";var n=`import { useAttr, ElemType } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children = null }) => {
 
   //declare elements
-  const refs = {}
+  const btn = <button>click</button>
+  const progress = <progress max={100} value={progValue} /> as ElemType<'progress'>
   const progText = new Text()
   const self = (
     <div>
-      <button ref={[refs, 'btn']}>click</button>
-      <progress ref={[refs, 'progress']} max={100} value={progValue} />
+      {btn}
+      {progress}
       {progText}%
       {children}
     </div>
   )
-  const { btn, progress } = refs
+
   /*
     below defines a property named 'progValue',
     and when 'progValue' changes, 
