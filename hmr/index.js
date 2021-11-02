@@ -10,7 +10,7 @@ export default function HMRLoader({ enabled  } = {
         },
         transform (code, id) {
             if (!id.includes('node_modules') && /\.[jt]sx$/.test(id)) {
-                console.log(hmrAdder.transform(code, id));
+                //console.log(hmrAdder.transform(code, id));
                 return hmrAdder.transform(code, id);
             }
         }

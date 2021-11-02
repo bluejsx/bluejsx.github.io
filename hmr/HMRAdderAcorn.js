@@ -15,8 +15,7 @@ class HMRAdderAcorn extends HMRAdderBase {
             sourceType: "module"
         });
         const originalCode = code;
-        const imports = this.getImports(program.body, path);
-        const exportedFuncs = this.getExportedFunctions(program.body);
+        const { imports , exportedFuncs  } = this.analyzeTree(program.body, path);
         const insertRecord = this.getInsertRecord();
         for (const funcNode of exportedFuncs){
             const { start , end  } = funcNode;
@@ -26,7 +25,7 @@ class HMRAdderAcorn extends HMRAdderBase {
             ], code, insertRecord);
             const jsxComponents = this.getDependentJSXComponents(funcCode, imports);
             //const refObjName = 
-            code = this.replaceCode(this.processFunctionCode(jsxComponents, funcNode, funcCode, originalCode), [
+            code = this.replaceCode(this.processFunctionCode(jsxComponents, funcNode, funcCode, imports, originalCode), [
                 start,
                 end
             ], code, insertRecord);
@@ -44,6 +43,7 @@ class HMRAdderAcorn extends HMRAdderBase {
         if (!o.usedCompNames.includes(jsxComponent.name)) {
             o.varMapCode += `${jsxComponent.info.imports[jsxComponent.name]}:${jsxComponent.name},`;
             o.usedCompNames.push(jsxComponent.name);
+        //o.overrideImportCode += `${jsxComponent.name}_b = ${jsxComponent.name};`
         }
         o.listenCode += `
 if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
@@ -54,7 +54,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
 }
 `;
     }
-    processFunctionCode(jsxComponents, funcNode, funcCode, wholeCode) {
+    processFunctionCode(jsxComponents, funcNode, funcCode, imports, wholeCode) {
         const insertRecord = this.getInsertRecord();
         const originalFuncCode = funcCode;
         const bodyNode = funcNode.body;
@@ -114,6 +114,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                 const refAttrNode = attrNode.properties.find((v)=>v.key.name === 'ref'
                 ) // ref: [refs, 'elem']
                 ;
+                //const classAttrNode = attrNode.properties.find((v: Node) => v.key.name === 'class')  // class: [refs, 'elem']
                 if (refAttrNode) {
                     let updateInitializeLines = '';
                     const refAttrContentNode = refAttrNode.value.elements;
@@ -179,8 +180,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
             const selfCode = this.getCodeFragment([
                 retNode.start - funcNode.start + 6,
                 retNode.end - funcNode.start
-            ], funcCode, insertRecord) //wholeCode.substring(retNode.start + 6, retNode.end)
-            ;
+            ], funcCode, insertRecord);
             insertCodeBeforeHotListener = `const ${selfVarName}=${selfCode}`;
             funcCode = this.replaceCode(`\nreturn ${selfVarName};`, [
                 retNode.start - funcNode.start,
@@ -190,12 +190,13 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
         funcCode = this.insertCode(insertCodeToFirstLine, isDirectJSXArrowReturnFunc ? relBodyStartIndex : relBodyStartIndex + 1, funcCode, insertRecord);
         let hotListenerCode = '';
         if (paramNode) {
-            hotListenerCode = `const newElem=Blue.r(Comp, attr, ${this.PARAM_ALTER_NAME}.children)`;
+            hotListenerCode = `const newElem=Blue.r(Comp, attr, ${this.PARAM_ALTER_NAME}.children?.map(elem=>elem.__newElem||elem))`;
         } else {
             hotListenerCode = `const newElem=Blue.r(Comp, attr)`;
         }
         hotListenerCode = `\n${selfVarName}.${this.UPDATE_LISTENER_FUNC_NAME} = (Comp, attr) =>{
     ${hotListenerCode}
+    ${selfVarName}.__newElem=newElem
     ${selfVarName}.before(newElem);
     ${selfVarName}.remove();
     return newElem
@@ -243,79 +244,146 @@ if(import.meta.hot){
         }
         return false;
     }
-    getImports(body, filepath) {
+    analyzeTree(body, filepath) {
         const imports = {
             varNames: [],
             info: {
             }
         };
-        for (const node of body){
-            if (node.type !== 'ImportDeclaration' || node.source.value.indexOf('.') !== 0) continue;
-            const resolvedImportPath = this.resolveFilePath(node.source.value, filepath);
-            if (!resolvedImportPath) continue;
-            const info = {
-                src: resolvedImportPath,
-                imports: {
-                }
-            };
-            imports.info[node.source.value] = info;
-            for (const specifier of node.specifiers){
-                let name = specifier.local.name;
-                if (specifier.type === 'ImportDefaultSpecifier') {
-                    //info.imports.default = name
-                    info.imports[name] = 'default';
-                } else if (specifier.type === 'ImportSpecifier') {
-                    //info.imports[specifier.imported.name] = name
-                    info.imports[name] = specifier.imported.name;
-                }
-                imports.varNames.push({
-                    name,
-                    info
-                });
-            }
-        }
-        return imports;
-    }
-    getExports(body) {
-        return body.filter((v)=>v.type === 'ExportDefaultDeclaration' || v.type === 'ExportNamedDeclaration'
-        );
-    }
-    getExportedFunctions(body) {
-        const funcNodes = [];
+        const exportedFuncs = [];
         const namesToLookFor = [];
-        const filterFuncs = (node, checkName = false)=>{
-            const { type  } = node;
-            if (!checkName && type === 'FunctionDeclaration' || type === 'ArrowFunctionExpression') {
-                funcNodes.push(node);
-            } else if (type === 'VariableDeclaration') {
-                if (checkName) {
-                    for (const declaration of node.declarations){
-                        if (namesToLookFor.includes(declaration.id.name)) {
-                            filterFuncs(declaration.init);
-                        }
-                    }
-                } else {
-                    for (const declaration of node.declarations)filterFuncs(declaration.init);
-                }
-            } else if (type === 'Identifier') namesToLookFor.push(node.name);
-        };
         for(let i = body.length; i--;){
             const bNode = body[i];
-            if (bNode.type === 'ExportDefaultDeclaration' || bNode.type === 'ExportNamedDeclaration') {
-                const { declaration , specifiers  } = bNode;
-                if (declaration) {
-                    filterFuncs(declaration);
-                } else {
-                    specifiers.forEach((specifier)=>{
-                        filterFuncs(specifier.local);
-                    });
-                }
-            } else if (namesToLookFor.length) {
-                filterFuncs(bNode, true);
-            }
+            this.filterImports(bNode, imports, filepath);
+            this.filterExportedFuncs(bNode, exportedFuncs, namesToLookFor);
         }
-        return funcNodes;
+        return {
+            imports,
+            exportedFuncs
+        };
     }
+    filterImports(node, imports, filepath) {
+        if (node.type !== 'ImportDeclaration' || node.source.value.indexOf('.') !== 0) return null;
+        const resolvedImportPath = this.resolveFilePath(node.source.value, filepath);
+        if (!resolvedImportPath) return null;
+        const info = {
+            src: resolvedImportPath,
+            imports: {
+            }
+        };
+        imports.info[node.source.value] = info;
+        for (const specifier of node.specifiers){
+            let name = specifier.local.name;
+            if (specifier.type === 'ImportDefaultSpecifier') {
+                //info.imports.default = name
+                info.imports[name] = 'default';
+            } else if (specifier.type === 'ImportSpecifier') {
+                //info.imports[specifier.imported.name] = name
+                info.imports[name] = specifier.imported.name;
+            }
+            imports.varNames.push({
+                name,
+                info
+            });
+        }
+    }
+    filterFuncs(node, funcNodes, namesToLookFor, checkName = false) {
+        const { type  } = node;
+        if (!checkName && type === 'FunctionDeclaration' || type === 'ArrowFunctionExpression') {
+            funcNodes.push(node);
+        } else if (type === 'VariableDeclaration') {
+            if (checkName) {
+                for (const declaration of node.declarations){
+                    if (namesToLookFor.includes(declaration.id.name)) {
+                        this.filterFuncs(declaration.init, funcNodes, namesToLookFor);
+                    }
+                }
+            } else {
+                for (const declaration of node.declarations)this.filterFuncs(declaration.init, funcNodes, namesToLookFor);
+            }
+        } else if (type === 'Identifier') namesToLookFor.push(node.name);
+    }
+    filterExportedFuncs(node, funcNodes, namesToLookFor) {
+        if (node.type === 'ExportDefaultDeclaration' || node.type === 'ExportNamedDeclaration') {
+            const { declaration , specifiers  } = node;
+            if (declaration) {
+                this.filterFuncs(declaration, funcNodes, namesToLookFor);
+            } else {
+                specifiers.forEach((specifier)=>{
+                    this.filterFuncs(specifier.local, funcNodes, namesToLookFor);
+                });
+            }
+        } else if (namesToLookFor.length) {
+            this.filterFuncs(node, funcNodes, namesToLookFor, true);
+        }
+    }
+    // getImports(body: Node[], filepath: string) {
+    //   const imports: ImportsData = {
+    //     varNames: [],
+    //     info: {}
+    //   }
+    //   for (const node of body) {
+    //     if (node.type !== 'ImportDeclaration' || node.source.value.indexOf('.') !== 0) continue
+    //     const resolvedImportPath = this.resolveFilePath(node.source.value, filepath)
+    //     if (!resolvedImportPath) continue
+    //     const info: ImportInfo = {
+    //       src: resolvedImportPath,
+    //       imports: {}
+    //     }
+    //     imports.info[node.source.value] = info
+    //     for (const specifier of node.specifiers) {
+    //       let name: string = specifier.local.name
+    //       if (specifier.type === 'ImportDefaultSpecifier') {
+    //         //info.imports.default = name
+    //         info.imports[name] = 'default'
+    //       } else if (specifier.type === 'ImportSpecifier') {
+    //         //info.imports[specifier.imported.name] = name
+    //         info.imports[name] = specifier.imported.name
+    //       }
+    //       imports.varNames.push({ name, info })
+    //     }
+    //   }
+    //   return imports
+    // }
+    // getExports(body: Node[]): Node[] {
+    //   return body.filter(v => v.type === 'ExportDefaultDeclaration' || v.type === 'ExportNamedDeclaration')
+    // }
+    // getExportedFunctions(body: Node[]): Node[] {
+    //   const funcNodes: Node[] = []
+    //   const namesToLookFor: string[] = []
+    //   const filterFuncs = (node: Node, checkName = false) => {
+    //     const { type } = node
+    //     if (!checkName && type === 'FunctionDeclaration' || type === 'ArrowFunctionExpression') {
+    //       funcNodes.push(node)
+    //     } else if (type === 'VariableDeclaration') {
+    //       if (checkName) {
+    //         for (const declaration of node.declarations) {
+    //           if (namesToLookFor.includes(declaration.id.name)) {
+    //             filterFuncs(declaration.init)
+    //           }
+    //         }
+    //       } else {
+    //         for (const declaration of node.declarations) filterFuncs(declaration.init)
+    //       }
+    //     } else if (type === 'Identifier') namesToLookFor.push(node.name)
+    //   }
+    //   for (let i = body.length; i--;) {
+    //     const bNode = body[i]
+    //     if (bNode.type === 'ExportDefaultDeclaration' || bNode.type === 'ExportNamedDeclaration') {
+    //       const { declaration, specifiers } = bNode
+    //       if (declaration) {
+    //         filterFuncs(declaration)
+    //       } else {
+    //         specifiers.forEach(specifier => {
+    //           filterFuncs(specifier.local)
+    //         })
+    //       }
+    //     } else if (namesToLookFor.length) {
+    //       filterFuncs(bNode, true)
+    //     }
+    //   }
+    //   return funcNodes
+    // }
     /** returns list of  */ getDependentJSXComponents(code, imports) {
         const jsxInfo = [];
         for (const v of code.matchAll(/Blue\.r\(([A-Z][A-z_]*)/g)){

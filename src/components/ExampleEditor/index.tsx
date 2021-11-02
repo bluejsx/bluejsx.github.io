@@ -30,7 +30,7 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
       applyCode(code, JSXModel)
       
       document.scrollingElement.scrollTo({
-        top: self.offsetTop-200,
+        top: self.offsetTop-100,
         left: 0,
         behavior: 'smooth'
       })
