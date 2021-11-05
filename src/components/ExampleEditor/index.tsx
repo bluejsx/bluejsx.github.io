@@ -20,7 +20,6 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
     </select>
   </CodeSpace> as ReturnType<typeof CodeSpace>
   const { codeSelector } = refs
-  const { editor } = self
   const JSXURI = monaco.Uri.parse('file:///main.jsx'), TSXURI = monaco.Uri.parse('file:///main.tsx'),
     JSXModel = monaco.editor.getModel(JSXURI) || monaco.editor.createModel(null, 'typescript', JSXURI),
     TSXModel = monaco.editor.getModel(TSXURI) || monaco.editor.createModel(null, 'typescript', TSXURI)

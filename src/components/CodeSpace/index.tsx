@@ -15,8 +15,8 @@ declare const Blue: any
 globalThis.Blue = Blue;
 globalThis.useAttr = useAttr;
 globalThis.AttrHolder = AttrHolder;
-
-(self as any).MonacoEnvironment = {
+/*@ts-ignore*/
+window.MonacoEnvironment = {
   getWorker(_: any, label: string) {
     if (label === 'json') {
       return new jsonWorker()

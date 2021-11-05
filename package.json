@@ -30,9 +30,9 @@
     "highlight.js": "^10.7.3",
     "jsx-transform": "^2.4.1",
     "markdown-it": "^12.2.0",
-    "monaco-editor": "^0.24.0",
+    "monaco-editor": "^0.30.0",
     "sass": "^1.37.5",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "devDependencies": {
     "directory-tree": "^3.0.0",
