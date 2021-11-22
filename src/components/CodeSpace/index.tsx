@@ -48,8 +48,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 });
 
 
-const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] })
-  : Blue.JSX.Element & { editor: monaco.editor.IStandaloneCodeEditor, init: () => void } => {
+const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] }) => {
   const refs: RefType<{
     editorContainer: 'div',
     resultSpace: 'div',
@@ -108,8 +107,8 @@ const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, c
               + encodeURIComponent(compileTS(editor.getValue()))
             ).then(Mod => resultSpace.appendChild(<Mod.default />))
           }
+          self.runCode = runCode
           runButton.onclick = runCode
-          runCode()
         })
       }
     }
@@ -117,7 +116,8 @@ const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, c
 
   return self as Blue.JSX.Element & {
     init: () => void
-    editor: monaco.editor.IStandaloneCodeEditor
+    editor: monaco.editor.IStandaloneCodeEditor,
+    runCode?: () => void
   }
 }
 

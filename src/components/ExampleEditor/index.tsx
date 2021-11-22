@@ -42,6 +42,7 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
   const applyCode = (code: string, model: monaco.editor.ITextModel) => {
     self.editor.setModel(model)
     self.editor.setValue(code)
+    self?.runCode()
   }
   codeSelector.onchange = async () => {
     switch (codeSelector.value) {
