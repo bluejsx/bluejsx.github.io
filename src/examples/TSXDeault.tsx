@@ -1,7 +1,7 @@
-import { useAttr, ElemType } from 'bluejsx'
+import { useAttr, ElemType, FuncCompParam } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children = null }) => {
+const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
 
   //declare elements
   const btn = <button>click</button>
