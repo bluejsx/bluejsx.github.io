@@ -17,6 +17,7 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
       <option value='4'>TSX with ref attribute</option>
       <option value='5'>TSX with AttrHolder</option>
       <option value='6'>TSX + SVG Animation</option>
+      <option value='7'>Playing Around</option>
     </select>
   </CodeSpace> as ReturnType<typeof CodeSpace>
   const { codeSelector } = refs
@@ -27,9 +28,9 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
     if (self.getBoundingClientRect().top < 500) {
       self.init()
       applyCode(code, JSXModel)
-      
+
       document.scrollingElement.scrollTo({
-        top: self.offsetTop-100,
+        top: self.offsetTop - 100,
         left: 0,
         behavior: 'smooth'
       })
@@ -64,6 +65,9 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
         break;
       case '6':
         import('../../examples/TSX_SVG_Anim?raw').then(({ default: code }) => applyCode(code, TSXModel))
+        break;
+      case '7':
+        import('../../examples/justPlayAround01?raw').then(({ default: code }) => applyCode(code, TSXModel))
         break;
       default:
         break;
