@@ -1,7 +1,7 @@
-import"./vendor.f1455a73.js";var n=`import { useAttr, RefType } from 'bluejsx'
+import"./vendor.f1455a73.js";var n=`import { useAttr, RefType, FuncCompParam } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children = null }) => {
+const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
 
   //declare elements
   const refs: RefType<{
