@@ -110,6 +110,12 @@ const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, c
           self.runCode = runCode
           runButton.onclick = runCode
           //runCode()
+          editor.addCommand(
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+            () => {
+              runCode()
+            }
+          )
         })
       }
     }
