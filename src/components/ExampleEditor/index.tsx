@@ -25,10 +25,11 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
     JSXModel = monaco.editor.getModel(JSXURI) || monaco.editor.createModel(null, 'typescript', JSXURI),
     TSXModel = monaco.editor.getModel(TSXURI) || monaco.editor.createModel(null, 'typescript', TSXURI)
   const onscroll = () => {
-    if (self.getBoundingClientRect().top < 500) {
+    const { top } = self.getBoundingClientRect()
+    if (top < 500 && top > 0) {
       self.init()
       applyCode(code, JSXModel)
-
+      //self.scrollIntoView({ behavior: 'smooth' })
       document.scrollingElement.scrollTo({
         top: self.offsetTop - 100,
         left: 0,

@@ -1,5 +1,5 @@
 .codespace {
-  height: 700px;
+  height: calc(100vh - 130px);
   display: grid;
   filter: none;
   ::selection {
