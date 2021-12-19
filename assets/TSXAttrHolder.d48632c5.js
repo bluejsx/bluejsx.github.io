@@ -1,11 +1,14 @@
-import"./vendor.8c1fdd4f.js";var t=`import { useAttr, AttrHolder } from 'bluejsx'
+import"./vendor.05be7e71.js";var n=`import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }) => {
+const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
   //create state holder
   const state = new AttrHolder()
   //declare elements
-  const refs = {}
+  const refs: RefType<{
+    btn: 'button'
+    progress: 'progress'
+  }> = {}
   const progText = new Text()
   const self = (
     <div>
@@ -34,4 +37,4 @@ const Example = ({ progValue = 0, children }) => {
   // return self element
   return self
 }
-export default Example`;export{t as default};
+export default Example`;export{n as default};
