@@ -9,7 +9,7 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-import { useAttr, AttrHolder, RefType } from 'bluejsx'
+import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
 declare const Blue: any
 
 globalThis.Blue = Blue;
@@ -48,7 +48,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 });
 
 
-const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, children?: any[] }) => {
+const CodeSpace = ({ children }: FuncCompParam<{}>) => {
   const refs: RefType<{
     editorContainer: 'div',
     resultSpace: 'div',
@@ -63,7 +63,6 @@ const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, c
     <div ref={[refs, 'resultSpace']} class='editor-result'></div>
   </div>
   const { editorContainer, resultSpace, runButton } = refs
-  const langURI = monaco.Uri.parse('file:///main.' + lang)
   const editor = monaco.editor.create(editorContainer, {
     lineNumbers: 'off',
     scrollBeyondLastLine: false,
@@ -74,55 +73,55 @@ const CodeSpace = ({ lang = 'jsx', children }: { code?: string, lang?: string, c
     },
     tabSize: 2,
   })
-
+  const init = async () => {
+    const [{ default: TS }, { default: vjsxDCode }] = await Promise.all([import('typescript'), import('bluejsx/dist/index.d?raw')])
+    self.classList.remove('preparing')
+    // extra libraries
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      vjsxDCode,
+      'file:///node_modules/bluejsx/index.d.ts')
+    const compileTS = (code: string) => {
+      code = code.replace(/import +(Blue* *,? *)?({? *[\w, ]+ *}?) +from +['"]bluejsx(\/\w*)*['"]/g, '')
+      return TS.transpile(code, {
+        jsx: TS.JsxEmit.React,
+        jsxFactory: 'Blue.r',
+        jsxFragmentFactory: 'Blue.Fragment',
+        lib: ["dom", "esnext"],
+        module: TS.ModuleKind.ESNext,
+        target: TS.ScriptTarget.ES2018,
+        removeComments: true
+      })
+    }
+    const runCode = () => {
+      resultSpace.innerHTML = ''
+      import(/* @vite-ignore */
+        'data:text/javascript;charset=utf-8,'
+        + encodeURIComponent(compileTS(editor.getValue()))
+      ).then(Mod => resultSpace.appendChild(<Mod.default />))
+    }
+    self.runCode = runCode
+    runButton.onclick = runCode
+    //runCode()
+    editor.addCommand(
+      monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+      () => {
+        runCode()
+      }
+    )
+    return runCode
+  }
   //self.editor = editor
   Object.defineProperties(self, {
     editor: {
       value: editor
     },
     init: {
-      value: function () {
-        Promise.all([import('typescript'), import('bluejsx/dist/index.d?raw')]).then(([{ default: TS }, { default: vjsxDCode }]) => {
-          self.classList.remove('preparing')
-          // extra libraries
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            vjsxDCode,
-            'file:///node_modules/bluejsx/index.d.ts');
-          const compileTS = (code: string) => {
-            code = code.replace(/import +(Blue* *,? *)?({? *[\w, ]+ *}?) +from +['"]bluejsx(\/\w*)*['"]/g, '')
-            return TS.transpile(code, {
-              jsx: TS.JsxEmit.React,
-              jsxFactory: 'Blue.r',
-              jsxFragmentFactory: 'Blue.Fragment',
-              lib: ["dom", "esnext"],
-              module: TS.ModuleKind.ESNext,
-              target: TS.ScriptTarget.ES2018,
-              removeComments: true
-            })
-          }
-          const runCode = () => {
-            resultSpace.innerHTML = ''
-            import(/* @vite-ignore */
-              'data:text/javascript;charset=utf-8,'
-              + encodeURIComponent(compileTS(editor.getValue()))
-            ).then(Mod => resultSpace.appendChild(<Mod.default />))
-          }
-          self.runCode = runCode
-          runButton.onclick = runCode
-          //runCode()
-          editor.addCommand(
-            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
-            () => {
-              runCode()
-            }
-          )
-        })
-      }
+      value: init
     }
   })
 
   return self as Blue.JSX.Element & {
-    init: () => void
+    init: typeof init,
     editor: monaco.editor.IStandaloneCodeEditor,
     runCode?: () => void
   }

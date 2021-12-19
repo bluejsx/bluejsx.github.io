@@ -27,8 +27,7 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
   const onscroll = () => {
     const { top } = self.getBoundingClientRect()
     if (top < 500 && top > 0) {
-      self.init()
-      applyCode(code, JSXModel)
+      self.init().then(()=>applyCode(code, JSXModel))
       //self.scrollIntoView({ behavior: 'smooth' })
       document.scrollingElement.scrollTo({
         top: self.offsetTop - 100,
@@ -43,7 +42,7 @@ export default ({ code, /* document = document.document */ }: { code?: string, d
   const applyCode = (code: string, model: monaco.editor.ITextModel) => {
     self.editor.setModel(model)
     self.editor.setValue(code)
-    self?.runCode()
+    self.runCode()
   }
   codeSelector.onchange = async () => {
     switch (codeSelector.value) {
