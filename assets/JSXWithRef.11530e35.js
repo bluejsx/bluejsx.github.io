@@ -1,13 +1,10 @@
-import"./vendor.05be7e71.js";var n=`import { useAttr, RefType, FuncCompParam } from 'bluejsx'
+import"./vendor.0d59f085.js";var n=`import { useAttr } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
+const Example = ({ progValue = 0, children }) => {
 
   //declare elements
-  const refs: RefType<{
-    btn: 'button'
-    progress: 'progress'
-  }> = {}
+  const refs = {}
   const progText = new Text()
   const self = (
     <div>
