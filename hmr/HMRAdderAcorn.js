@@ -1,14 +1,25 @@
-import { Parser } from 'acorn';
+import { Parser, tokenizer } from 'acorn';
 import HMRAdderBase from './HMRAdderBase';
-import path from 'path';
-import fs from 'fs';
 var _hotListenerInfo;
+let first = true;
 class HMRAdderAcorn extends HMRAdderBase {
-    constructor(){
-        super();
-        this.Parser = Parser;
-    }
     transform(code, path) {
+        if (!first) return code;
+        first = false;
+        code = code.replace(/=>/g, '=> ').replace(/Blue\.r\(([A-Z]\w*)[ \n]*\)/g, 'Blue.r($1, null)');
+        const originalCode = code;
+        const tokens = tokenizer(originalCode, {
+            ecmaVersion: 'latest',
+            sourceType: "module"
+        });
+        //let str = ''
+        for (const token of tokens){
+            if (token.type.label === 'function') console.log('hbj');
+        }
+        //console.log(str);
+        return code;
+    }
+    transform_o(code, path) {
         code = code.replace(/=>/g, '=> ').replace(/Blue\.r\(([A-Z]\w*)[ \n]*\)/g, 'Blue.r($1, null)');
         const program = this.Parser.parse(code, {
             ecmaVersion: 'latest',
@@ -74,8 +85,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
         }
         let selfVarName = 'self';
         const execLater = [];
-        const hotListenerInfo = {
-        };
+        const hotListenerInfo = {};
         let refObjectName;
         let c = 0;
         const retNode = bodyNodes?.find((v)=>v.type === 'ReturnStatement'
@@ -88,8 +98,8 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
         }
         const isDirectJSXReturnFunc = retNode && retNode.argument.type === 'CallExpression' && retNode.argument.callee?.object?.name === 'Blue';
         const insertHotListenerPlace = isDirectJSXArrowReturnFunc ? relBodyEndIndex : retNode.start - funcNode.start;
-        for (const v of funcCode.matchAll(/Blue\.r\(/g)){
-            let blueCallNode = this.Parser.parseExpressionAt(funcCode, v.index, {
+        for (const v1 of funcCode.matchAll(/Blue\.r\(/g)){
+            let blueCallNode = this.Parser.parseExpressionAt(funcCode, v1.index, {
                 ecmaVersion: 'latest',
                 sourceType: "module"
             });
@@ -139,8 +149,7 @@ if(${refObjectName}.${jsxComponent.refName}.${this.UPDATE_LISTENER_FUNC_NAME}){
                                 if (varNode.type === 'AssignmentExpression' || varNode.type === 'CallExpression') {
                                     funcCode = this.insertCode(`${refObjectName}.`, v.index, funcCode, insertRecord);
                                 }
-                            } catch (e) {
-                            }
+                            } catch (e) {}
                         }
                     }
                     this.addHotListenerInfo(hotListenerInfo, jsxComponent, refObjectName, updateInitializeLines);
@@ -219,36 +228,10 @@ if(import.meta.hot){
         funcCode = this.insertCode(hotListenerCode, insertHotListenerPlace, funcCode, insertRecord);
         return funcCode;
     }
-    resolveFilePath(filepath, fromPath) {
-        const dPath = path.resolve(fromPath, '../', filepath);
-        try {
-            const stat = fs.statSync(dPath);
-            if (stat.isDirectory()) {
-                const filenames = fs.readdirSync(dPath);
-                for(let i = filenames.length; i--;){
-                    const filename = filenames[i];
-                    if (/index\.(?:[jt]sx|mdx?)$/.test(filename)) return filepath + '/' + filename;
-                }
-            } else {
-                if (stat.isFile()) return filepath;
-                return false;
-            }
-        } catch (e) {
-            const filenames = fs.readdirSync(path.resolve(dPath, '../'));
-            const targetFileName = path.basename(filepath);
-            const parentDirName = path.dirname(filepath);
-            for(let i = filenames.length; i--;){
-                const filename = filenames[i];
-                if (filenames.indexOf(targetFileName) === 0 && /\.(?:[jt]sx|mdx?)$/.test(filename)) return parentDirName + '/' + filename;
-            }
-        }
-        return false;
-    }
     analyzeTree(body, filepath) {
         const imports = {
             varNames: [],
-            info: {
-            }
+            info: {}
         };
         const exportedFuncs = [];
         const namesToLookFor = [];
@@ -268,8 +251,7 @@ if(import.meta.hot){
         if (!resolvedImportPath) return null;
         const info = {
             src: resolvedImportPath,
-            imports: {
-            }
+            imports: {}
         };
         imports.info[node.source.value] = info;
         for (const specifier of node.specifiers){
@@ -386,9 +368,9 @@ if(import.meta.hot){
     // }
     /** returns list of  */ getDependentJSXComponents(code, imports) {
         const jsxInfo = [];
-        for (const v of code.matchAll(/Blue\.r\(([A-Z][A-z_]*)/g)){
-            const compName = v[1];
-            let blueCallNode = this.Parser.parseExpressionAt(code, v.index, {
+        for (const v2 of code.matchAll(/Blue\.r\(([A-Z][A-z_]*)/g)){
+            const compName = v2[1];
+            let blueCallNode = this.Parser.parseExpressionAt(code, v2.index, {
                 ecmaVersion: 'latest',
                 sourceType: "module"
             });
@@ -402,7 +384,7 @@ if(import.meta.hot){
                         name: compName,
                         info: i.info,
                         node: blueCallNode,
-                        index: v.index
+                        index: v2.index
                     };
                     jsxInfo.push(importedJSXData);
                 }
@@ -418,6 +400,11 @@ if(import.meta.hot){
     }
     getReturnValue(funcNode) {
         return '';
+    }
+    constructor({ resolveFilePath  }){
+        super();
+        this.resolveFilePath = resolveFilePath;
+        this.Parser = Parser;
     }
 }
 export { HMRAdderAcorn as default };

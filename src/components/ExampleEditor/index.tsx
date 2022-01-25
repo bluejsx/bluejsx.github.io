@@ -1,9 +1,9 @@
-import { RefType } from "bluejsx"
+import { FuncCompParam, RefType } from "bluejsx"
 import CodeSpace from "../CodeSpace"
 import * as monaco from 'monaco-editor'
 import { codeOptions as CLASS_CODE_OPTIONS } from './index.module.scss'
 
-export default ({ code, /* document = document.document */ }: { code?: string, document?: Element, [key: string]: any }) => {
+export default ({ code, /* document = document.document */ }: FuncCompParam<{ code?: string, document?: Element }>) => {
   const refs: RefType<{
     codeSelector: 'select'
   }> = {}

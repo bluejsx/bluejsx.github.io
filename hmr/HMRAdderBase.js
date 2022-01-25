@@ -1,10 +1,5 @@
 class HMRAdderBase {
-    constructor(){
-        this.UPDATE_LISTENER_FUNC_NAME = '_bjsx_hmr_update';
-        this.PARAM_ALTER_NAME = '_blue_insert_params';
-    }
-    transform(code) {
-    }
+    transform(code, path) {}
     getImports(...args) {
         return [];
     }
@@ -72,6 +67,10 @@ class HMRAdderBase {
             }
         }
         return code.substring(i1, i2);
+    }
+    constructor(){
+        this.UPDATE_LISTENER_FUNC_NAME = '_bjsx_hmr_update';
+        this.PARAM_ALTER_NAME = '_blue_insert_params';
     }
 }
 export { HMRAdderBase as default };
