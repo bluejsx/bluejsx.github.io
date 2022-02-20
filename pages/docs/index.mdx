@@ -6,7 +6,10 @@
 
 </div>
 
-Typescript coders, please see [TS doc](./ts) after finish reading this page.
+## Additional Resources:
+
+- [TS Tips](./ts.html)
+- [BlueJSX Templates](./templates.html)
 
 ## Basic
 
@@ -23,14 +26,15 @@ const elem1 = document.createElement('div')
 elem1.id = 'elem1'
 elem1.append('hi!')
 ```
-FYI
-- Blue sets attributes as [IDL attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#content_versus_idl_attributes). 
-- This means Blue uses `elem['attrName']='value'` instead of `elem.setAttribute('attrName', 'value')`
-  - This makes you able to set HTML properties such as `innerHTML` and `onclick`.
-  - Exceptions:
-    - SVG elements
-    - `class` and `style` attribute
-    - attributes that include dash `-`
+> FYI
+>
+> - Blue sets attributes as [IDL attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#content_versus_idl_attributes). 
+> - This means Blue uses `elem['attrName']='value'` instead of `elem.setAttribute('attrName', 'value')`
+>  - This makes you able to set HTML properties such as `innerHTML` and `onclick`.
+>  - Exceptions:
+>    - SVG elements
+>    - `class` and `style` attribute
+>    - attributes that include dash `-`
     
 ### Function components
 
@@ -60,9 +64,15 @@ document.querySelector('#app').appendChild(
 
 ### Ref Attribute
 
+import { CodeCompare } from '@/components/CodeCompare'
+
 You can avoid breaking down DOM trees.
-By using `ref` attribute, you can replace the following code:
+By using `ref` attribute, you can make JSX code simpler:
+
+<CodeCompare>
+
 ```jsx
+// without ref
 const btn = <button>click</button>
 const progress = <progress max='10' value='0' />
 const self = (
@@ -74,8 +84,8 @@ const self = (
 btn.onclick = () => progress.value++
 ```
 
-with:
 ```jsx
+// with ref
 const refs = {}
 const self = (
   <div>
@@ -86,6 +96,8 @@ const self = (
 const { btn, progress } = refs
 btn.onclick = () => progress.value++
 ```
+
+</CodeCompare>
 
 Here is the usage:
 
@@ -107,11 +119,14 @@ After the Element declarations, add following code:
 const { btn } = ref
 ```
 
-Great! You can now be able to use the button element with the `btn` variable. Don't forget, the value of `ref` attribute is:
-```ts
-[object, string]
-//[<object for reference passing>, <name of the element you prefer to use>]
-```
+Great! You can now be able to use the button element with the `btn` variable. 
+
+> TS tip:
+>
+> There is a type annotation for `refs` available: `RefType`
+>
+> see [TS Tips](./ts.html) for more info.
+
 
 ### Text setter
 

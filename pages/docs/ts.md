@@ -5,7 +5,7 @@
 List of types available from `bluejsx` import.
 
 
-### ElemType
+### `ElemType`
 
 Type for specific BlueJSX elements. 
 
@@ -23,7 +23,7 @@ let p: ElemType<'progress'>
 p.value=5
 ```
 
-### RefType
+### `RefType`
 
 A type for reference object. 
 
@@ -44,4 +44,14 @@ const refs: {
   elem2?: ReturnType<typeof FuncComponent>
   elem3?: ClassComponent
 } = {}
+```
+
+### `FuncCompParam`
+
+type for function component parameters.
+
+```ts
+const Component = ({ attrA, children }: FuncCompParam<{
+  attrA?: string
+}>) => <div />
 ```

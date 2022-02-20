@@ -1,0 +1,51 @@
+# Templates
+
+## How to use templates to start new projects
+
+Here is how you can create new BlueJSX project in commandline:
+
+```sh
+npx degit bluejsx/templates/<template name> <your project name>
+cd <your project name>
+npm i
+```
+* replace `<your project name>` with your desired project folder name.
+* replace `<template name>` with name of templates (`vite-js`, `vite-ts`, `pages`, `vite-mdx`) 
+
+## `vite-js`
+
+BlueJSX template in JS
+
+## `vite-ts`
+
+BlueJSX template in TS
+
+## `vite-mdx`
+
+BlueJSX template with MDX example.
+
+You can use your BlueJSX components inside `.mdx` file
+
+(e.g. `<Component />`)
+
+## `pages`
+
+> ⚠️ This feature is experimental.
+
+BlueJSX template for multiple page websites.
+- this supports BlueMDX
+
+each files (either `.js`, `.jsx`, `.tsx`, `.md`, `.mdx`) in `pages` directory corresponds to each HTML outputs.
+
+e.g.
+
+- `pages/index.mdx` -> `dist/index.html`
+- `pages/pageB.ts` -> `dist/pageB.html`
+- `pages/sub/pageC.md` -> `dist/sub/pageC.html`
+
+
+## GitHub
+
+The template codes can be found in [GitHub Repository](https://github.com/bluejsx/templates).
+
+
