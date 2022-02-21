@@ -1,10 +1,13 @@
-import"./vendor.e1de4b3c.js";var n=`import { useAttr } from 'bluejsx'
+import"./vendor.ef31fef8.js";var n=`import { useAttr, RefType, FuncCompParam } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }) => {
+const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
 
   //declare elements
-  const refs = {}
+  const refs: RefType<{
+    btn: 'button'
+    progress: 'progress'
+  }> = {}
   const progText = new Text()
   const self = (
     <div>
@@ -25,7 +28,7 @@ const Example = ({ progValue = 0, children }) => {
   //when \`self.progValue\` changes, run the following listener
   self.watch('progValue', v => {
     progress.value = v
-    progText.data = v
+    progText.data = v+''
   })
 
   btn.onclick = () => {
