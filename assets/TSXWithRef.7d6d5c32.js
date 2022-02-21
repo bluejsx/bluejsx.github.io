@@ -1,21 +1,23 @@
-import"./vendor.020b8d82.js";var n=`import { useAttr, ElemType, FuncCompParam } from 'bluejsx'
+import"./vendor.e1de4b3c.js";var n=`import { useAttr, RefType, FuncCompParam } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
 
   //declare elements
-  const btn = <button>click</button>
-  const progress = <progress max={100} value={progValue} /> as ElemType<'progress'>
+  const refs: RefType<{
+    btn: 'button'
+    progress: 'progress'
+  }> = {}
   const progText = new Text()
   const self = (
     <div>
-      {btn}
-      {progress}
+      <button ref={[refs, 'btn']}>click</button>
+      <progress ref={[refs, 'progress']} max={100} value={progValue} />
       {progText}%
       {children}
     </div>
   )
-
+  const { btn, progress } = refs
   /*
     below defines a property named 'progValue',
     and when 'progValue' changes, 

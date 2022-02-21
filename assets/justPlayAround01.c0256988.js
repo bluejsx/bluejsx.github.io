@@ -1,4 +1,4 @@
-import"./vendor.020b8d82.js";var e=`import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
+import"./vendor.e1de4b3c.js";var e=`import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
 
 /*
   Made progress transition smooth
