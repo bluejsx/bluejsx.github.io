@@ -26,7 +26,7 @@ const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number 
   // when \`state.progValue\` changes, run the following listener
   state.watch('progValue', v => {
     progress.value = v
-    progText.data = v
+    progText.data = v+''
   })
 
   btn.onclick = () => {
