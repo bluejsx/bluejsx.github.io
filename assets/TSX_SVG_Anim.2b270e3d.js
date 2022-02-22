@@ -1,4 +1,4 @@
-import"./vendor.ef31fef8.js";var t=`import { RefType } from 'bluejsx'
+import"./vendor.00e1c3ad.js";var t=`import { RefType } from 'bluejsx'
 
 const Example = () => {
 

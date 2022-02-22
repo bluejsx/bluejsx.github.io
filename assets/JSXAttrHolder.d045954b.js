@@ -1,4 +1,4 @@
-import"./vendor.ef31fef8.js";var t=`import { useAttr, AttrHolder } from 'bluejsx'
+import"./vendor.00e1c3ad.js";var t=`import { useAttr, AttrHolder } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }) => {
