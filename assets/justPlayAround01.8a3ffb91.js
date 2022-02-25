@@ -1,4 +1,4 @@
-import"./vendor.00e1c3ad.js";var e=`import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
+import"./vendor.83679855.js";var e=`import { useAttr, AttrHolder, FuncCompParam, getRefs } from 'bluejsx'
 
 /*
   Made progress transition smooth
@@ -49,10 +49,10 @@ const transition = (fromValue: number, toValue: number, easing: EasingFunction, 
 export default ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
   const state = new AttrHolder()
 
-  const refs: RefType<{
+  const refs = getRefs<{
     btn: 'button'
     progress: 'progress'
-  }> = {}
+  }>()
   const progText = new Text()
 
   const self = (

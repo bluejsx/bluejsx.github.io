@@ -1,14 +1,13 @@
-import"./vendor.00e1c3ad.js";var n=`import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
+import"./vendor.83679855.js";var n=`import { useAttr, FuncCompParam, getRefs } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
-  //create state holder
-  const state = new AttrHolder()
-  //declare elements
-  const refs: RefType<{
+
+  const refs = getRefs<{
     btn: 'button'
     progress: 'progress'
-  }> = {}
+  }>()
+  //declare elements
   const progText = new Text()
   const self = (
     <div>
@@ -19,19 +18,22 @@ const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number 
     </div>
   )
   const { btn, progress } = refs
+  /*
+    below defines a property named 'progValue',
+    and when 'progValue' changes, 
+    all registered listeners will be executed.
+  */
+  useAttr(self, 'progValue', progValue)
 
-  //create state
-  useAttr(state, 'progValue', progValue)
-
-  // when \`state.progValue\` changes, run the following listener
-  state.watch('progValue', v => {
+  //when \`self.progValue\` changes, run the following listener
+  self.watch('progValue', v => {
     progress.value = v
     progText.data = v+''
   })
 
   btn.onclick = () => {
-    if (state.progValue < 100) state.progValue += 10
-    else state.progValue = 0
+    if (self.progValue < 100) self.progValue += 10
+    else self.progValue = 0
   }
 
   // return self element

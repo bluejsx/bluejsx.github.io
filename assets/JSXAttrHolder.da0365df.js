@@ -1,11 +1,17 @@
-import"./vendor.00e1c3ad.js";var t=`import { useAttr, AttrHolder } from 'bluejsx'
+import"./vendor.83679855.js";var t=`import { useAttr, AttrHolder, RefType } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }) => {
   //create state holder
   const state = new AttrHolder()
-  //declare elements
+  /**
+   * @type {RefType<{
+   *   btn: 'button'
+   *   progress: 'progress'
+   * }>}
+   */
   const refs = {}
+  //declare elements
   const progText = new Text()
   const self = (
     <div>
