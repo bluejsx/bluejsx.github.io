@@ -9,13 +9,14 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-import { useAttr, AttrHolder, RefType, FuncCompParam, getRefs } from 'bluejsx'
+import { useAttr, AttrHolder, RefType, FuncCompParam } from 'bluejsx'
 declare const Blue: any
 
 globalThis.Blue = Blue;
 globalThis.useAttr = useAttr;
 globalThis.AttrHolder = AttrHolder;
-globalThis.getRefs = getRefs;
+globalThis.getRefs = () => ({});
+
 /*@ts-ignore*/
 window.MonacoEnvironment = {
   getWorker(_: any, label: string) {
