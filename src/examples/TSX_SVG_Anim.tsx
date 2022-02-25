@@ -1,14 +1,14 @@
-import { RefType } from 'bluejsx'
+import { getRefs } from 'bluejsx'
 
 const Example = () => {
 
-  const refs: RefType<{
+  const refs = getRefs<{
     stopColor: 'stop'
     line1: 'line'
     line2: 'line'
     line3: 'line'
     line4: 'line'
-  }> = {}
+  }>()
   const self = (
     <svg viewBox="0 0 256 256" width="80%" height="80%">
       <g>

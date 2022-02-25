@@ -1,13 +1,13 @@
-import { useAttr, RefType, FuncCompParam } from 'bluejsx'
+import { useAttr, FuncCompParam, getRefs } from 'bluejsx'
 
 //takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
 
-  //declare elements
-  const refs: RefType<{
+  const refs = getRefs<{
     btn: 'button'
     progress: 'progress'
-  }> = {}
+  }>()
+  //declare elements
   const progText = new Text()
   const self = (
     <div>
