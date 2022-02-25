@@ -46,6 +46,21 @@ const refs: {
 } = {}
 ```
 
+### `getRefs()`
+
+Function wrapper for `RefType`.
+
+Returns `RefType` object.
+
+Usage:
+```ts
+const refs = getRefs<{
+  elem1: 'button'  //element tag name
+  elem2: typeof FuncComponent  //function component
+  elem3: ClassComponent //Custom Element (extends HTMLElement)
+}>()
+```
+
 ### `FuncCompParam`
 
 type for function component parameters.
