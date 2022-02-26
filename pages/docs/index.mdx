@@ -73,6 +73,7 @@ By using `ref` attribute, you can keep your JSX code nested:
 
 ```jsx
 // without ref
+
 const btn = <button>click</button>
 const progress = <progress max='10' value='0' />
 const self = (
@@ -81,12 +82,15 @@ const self = (
     {progress}
   </div>
 )
+
 btn.onclick = () => progress.value++
 ```
 
 ```jsx
 // with ref
 const refs = {}
+
+
 const self = (
   <div>
     <button ref={[refs, 'btn']}>click</button>

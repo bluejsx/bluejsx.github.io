@@ -1,6 +1,6 @@
 import { useAttr, RefType } from 'bluejsx'
 
-//takes in attributes as arguments (access to children elements via 'children' attribute)
+// takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }) => {
   /**
    * @type {RefType<{
@@ -9,7 +9,7 @@ const Example = ({ progValue = 0, children }) => {
    * }>}
   */
   const refs = {}
-  //declare elements
+  // declare elements
   const progText = new Text()
   const self = (
     <div>
@@ -27,7 +27,7 @@ const Example = ({ progValue = 0, children }) => {
   */
   useAttr(self, 'progValue', progValue)
 
-  //when `self.progValue` changes, run the following listener
+  // when `self.progValue` changes, run the following listener
   self.watch('progValue', v => {
     progress.value = v
     progText.data = v

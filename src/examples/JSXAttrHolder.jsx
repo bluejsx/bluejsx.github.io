@@ -1,8 +1,8 @@
 import { useAttr, AttrHolder, RefType } from 'bluejsx'
 
-//takes in attributes as arguments (access to children elements via 'children' attribute)
+// takes in attributes as arguments (access to children elements via 'children' attribute)
 const Example = ({ progValue = 0, children }) => {
-  //create state holder
+  // create state holder
   const state = new AttrHolder()
   /**
    * @type {RefType<{
@@ -11,7 +11,7 @@ const Example = ({ progValue = 0, children }) => {
    * }>}
    */
   const refs = {}
-  //declare elements
+  // declare elements
   const progText = new Text()
   const self = (
     <div>
@@ -23,7 +23,7 @@ const Example = ({ progValue = 0, children }) => {
   )
   const { btn, progress } = refs
 
-  //create state
+  // create state
   useAttr(state, 'progValue', progValue)
 
   // when `state.progValue` changes, run the following listener
