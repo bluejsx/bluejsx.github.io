@@ -1,17 +1,14 @@
-import"./vendor.83679855.js";var t=`import { useAttr, AttrHolder, RefType } from 'bluejsx'
+import"./vendor.83679855.js";var t=`import { useAttr, AttrHolder, getRefs, FuncCompParam } from 'bluejsx'
 
-//takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }) => {
-  //create state holder
+// takes in attributes as arguments (access to children elements via 'children' attribute)
+const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
+  // create state holder
   const state = new AttrHolder()
-  /**
-   * @type {RefType<{
-   *   btn: 'button'
-   *   progress: 'progress'
-   * }>}
-   */
-  const refs = {}
-  //declare elements
+  // declare elements
+  const refs = getRefs<{
+    btn: 'button'
+    progress: 'progress'
+  }>()
   const progText = new Text()
   const self = (
     <div>
@@ -23,13 +20,13 @@ const Example = ({ progValue = 0, children }) => {
   )
   const { btn, progress } = refs
 
-  //create state
+  // create state
   useAttr(state, 'progValue', progValue)
 
   // when \`state.progValue\` changes, run the following listener
   state.watch('progValue', v => {
     progress.value = v
-    progText.data = v
+    progText.data = v+''
   })
 
   btn.onclick = () => {
