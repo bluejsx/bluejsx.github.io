@@ -1,7 +1,7 @@
 import { FuncCompParam, getRefs } from "bluejsx"
 import CodeSpace from "../CodeSpace"
 import * as monaco from 'monaco-editor'
-import { codeOptions as CLASS_CODE_OPTIONS } from './index.module.scss'
+import style from './index.module.scss'
 
 export default ({ code, /* document = document.document */ }: FuncCompParam<{ code?: string, document?: Element }>) => {
   const refs = getRefs<{
@@ -9,7 +9,7 @@ export default ({ code, /* document = document.document */ }: FuncCompParam<{ co
   }>()
   const self = <CodeSpace>
     <label for='code-options'> Coding style: </label>
-    <select id='code-options' class={CLASS_CODE_OPTIONS} ref={[refs, 'codeSelector']}>
+    <select id='code-options' class={style.codeOptions} ref={[refs, 'codeSelector']}>
       <option value='0'>JSX</option>
       <option value='1'>JSX with ref attribute</option>
       <option value='2'>JSX with AttrHolder</option>

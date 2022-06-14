@@ -7,4 +7,3 @@ export default () => (
     <a href='/'><div class={title}>BlueJSX</div></a>
     <Menu />
   </header>)
-// export default Header
