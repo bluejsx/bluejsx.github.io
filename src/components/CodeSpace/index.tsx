@@ -83,45 +83,46 @@ const CodeSpace = ({ children }: FuncCompParam<{}>) => {
     editor,
     async init() {
 
-      const registry = new Registry({
-        getGrammarDefinition: async (scopeName) => {
-          return {
-            format: 'json',
-            content: (await import('./TypeScriptReact.tmLanguage.json')).default,
-          }
-        }
-      })
-      // map of monaco "language id's" to TextMate scopeNames
-      const grammars = new Map()
-      grammars.set('typescript', 'source.tsx')
-      grammars.set('javascript', 'source.tsx')
+      // const registry = new Registry({
+      //   getGrammarDefinition: async (scopeName) => {
+      //     return {
+      //       format: 'json',
+      //       content: (await import('./TypeScriptReact.tmLanguage.json')).default,
+      //     }
+      //   }
+      // })
+      // // map of monaco "language id's" to TextMate scopeNames
+      // const grammars = new Map()
+      // grammars.set('typescript', 'source.tsx')
+      // grammars.set('javascript', 'source.tsx')
 
       // grammars.set('typescriptreact', 'source.tsx')
 
       const [
         { default: TS },
         { default: vjsxDCode },
-        { default: vsDarkTheme },
-        _loadWasm,
+        // { default: vsDarkTheme },
+        // _loadWasm,
       ] = await Promise.all([
         import('typescript'),
         import('bluejsx/dist/index.d?raw'),
-        import('./dark-plus-theme-converted.json') as Promise<{
-          default: monaco.editor.IStandaloneThemeData
-        }>,
-        async () => {
-          await loadWASM(
-            await (
-              await fetch('onigasm/lib/onigasm.wasm')
-            ).arrayBuffer()
-          )
-        }
+        
+	// import('./dark-plus-theme-converted.json') as Promise<{
+        //   default: monaco.editor.IStandaloneThemeData
+        // }>,
+        // async () => {
+        //   await loadWASM(
+        //     await (
+        //       await fetch('onigasm/lib/onigasm.wasm')
+        //     ).arrayBuffer()
+        //   )
+        // }
       ])
       
       
       // monaco's built-in themes aren't powereful enough to handle TM tokens
       // https://github.com/Nishkalkashyap/monaco-vscode-textmate-theme-converter#monaco-vscode-textmate-theme-converter
-      monaco.editor.defineTheme('dark-plus', vsDarkTheme);
+      // monaco.editor.defineTheme('dark-plus', vsDarkTheme);
       // extra libraries
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         vjsxDCode,
@@ -153,7 +154,9 @@ const CodeSpace = ({ children }: FuncCompParam<{}>) => {
         monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
         runCode
       )
-      await wireTmGrammars(monaco, registry, grammars)
+
+      // for now, dark-plus theme is not working so it's commented out
+      // await wireTmGrammars(monaco, registry, grammars)
       self.classList.remove('preparing')
       return runCode
     }
