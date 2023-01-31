@@ -1,7 +1,11 @@
 import { useAttr, ElemType, FuncCompParam } from 'bluejsx'
 
 // takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
+const Example = (
+  { progValue = 0, children }: FuncCompParam<{
+    progValue: number
+  }>
+) => {
 
   // declare elements
   const btn = <button>click</button>
@@ -24,9 +28,9 @@ const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number 
   useAttr(self, 'progValue', progValue)
 
   // when `self.progValue` changes, run the following listener
-  self.watch('progValue', v => {
-    progress.value = v
-    progText.data = v+''
+  self.watch('progValue', value => {
+    progress.value = value
+    progText.data = value.toString()
   })
 
   btn.onclick = () => {

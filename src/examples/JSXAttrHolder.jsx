@@ -27,9 +27,9 @@ const Example = ({ progValue = 0, children }) => {
   useAttr(state, 'progValue', progValue)
 
   // when `state.progValue` changes, run the following listener
-  state.watch('progValue', v => {
-    progress.value = v
-    progText.data = v
+  state.watch('progValue', value => {
+    progress.value = value
+    progText.data = value
   })
 
   btn.onclick = () => {

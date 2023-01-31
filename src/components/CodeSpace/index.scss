@@ -8,30 +8,30 @@
   &.preparing {
     filter: blur(1px);
   }
-  @media (min-width: 701px) {
-    &{
-      grid-template-rows: 2em calc(100% - 1.8em);
-      grid-template-columns: 65% 35%;
-    }
-    .editor-options {
-      grid-row: 1;
-      grid-column: 1;
-    }
-    .editor-container {
-      grid-row: 2;
-      grid-column: 1;
-    }
-    .editor-result {
-      grid-row: 2;
-      grid-column: 2;
-      background-color: gray;
-    }
-    .run-button {
-      grid-row: 1;
-      grid-column: 2;
-    }
-  }
-  @media (max-width: 700px) {
+  // @media (min-width: 701px) {
+  //   &{
+  //     grid-template-rows: 2em calc(100% - 1.8em);
+  //     grid-template-columns: 65% 35%;
+  //   }
+  //   .editor-options {
+  //     grid-row: 1;
+  //     grid-column: 1;
+  //   }
+  //   .editor-container {
+  //     grid-row: 2;
+  //     grid-column: 1;
+  //   }
+  //   .editor-result {
+  //     grid-row: 2;
+  //     grid-column: 2;
+  //     background-color: gray;
+  //   }
+  //   .run-button {
+  //     grid-row: 1;
+  //     grid-column: 2;
+  //   }
+  // }
+  // @media (max-width: 700px) {
     &{
       grid-template-rows: 2em 70% 2em 20%;
       grid-template-columns: 100%;
@@ -52,7 +52,7 @@
       grid-row: 3;
       grid-column: 1;
     }
-  }
+  // }
   .editor-options {
     display: flex;
     justify-content: center;

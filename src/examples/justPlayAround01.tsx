@@ -27,7 +27,13 @@ const ease: EasingFunction = x => {
  * @param duration time interval in ms
  * @param listener listener function that takes a value between `fromValue` and `toValue`.
  */
-const transition = (fromValue: number, toValue: number, easing: EasingFunction, duration: number, listener: (value: number) => void) => {
+const transition = (
+  fromValue: number,
+  toValue: number,
+  easing: EasingFunction,
+  duration: number,
+  listener: (value: number) => void
+) => {
   let animFrameID: number
 
   const dValue = toValue - fromValue

@@ -1,4 +1,7 @@
 import * as monaco from 'monaco-editor'
+import { loadWASM } from 'onigasm' // peer dependency of 'monaco-textmate'
+import { Registry } from 'monaco-textmate' // peer dependency
+import { wireTmGrammars } from 'monaco-editor-textmate'
 
 import './index.scss'
 
@@ -9,7 +12,7 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-import { useAttr, AttrHolder, RefType, FuncCompParam, useConstProps } from 'bluejsx'
+import { useAttr, AttrHolder, RefType, FuncCompParam, useConstProps, ElemType } from 'bluejsx'
 declare const Blue: any
 
 globalThis.Blue = Blue;
@@ -64,7 +67,7 @@ const CodeSpace = ({ children }: FuncCompParam<{}>) => {
     <div ref={[refs, 'editorContainer']} class='editor-container' />
     <button ref={[refs, 'runButton']} class='run-button'>Click to run ▶️</button>
     <div ref={[refs, 'resultSpace']} class='editor-result'></div>
-  </div>
+  </div> as ElemType<'div'>
   const { editorContainer, resultSpace, runButton } = refs
   const editor = monaco.editor.create(editorContainer, {
     lineNumbers: 'off',
@@ -79,8 +82,46 @@ const CodeSpace = ({ children }: FuncCompParam<{}>) => {
   useConstProps(self, {
     editor,
     async init() {
-      const [{ default: TS }, { default: vjsxDCode }] = await Promise.all([import('typescript'), import('bluejsx/dist/index.d?raw')])
-      self.classList.remove('preparing')
+
+      const registry = new Registry({
+        getGrammarDefinition: async (scopeName) => {
+          return {
+            format: 'json',
+            content: (await import('./TypeScriptReact.tmLanguage.json')).default,
+          }
+        }
+      })
+      // map of monaco "language id's" to TextMate scopeNames
+      const grammars = new Map()
+      grammars.set('typescript', 'source.tsx')
+      grammars.set('javascript', 'source.tsx')
+
+      // grammars.set('typescriptreact', 'source.tsx')
+
+      const [
+        { default: TS },
+        { default: vjsxDCode },
+        { default: vsDarkTheme },
+        _loadWasm,
+      ] = await Promise.all([
+        import('typescript'),
+        import('bluejsx/dist/index.d?raw'),
+        import('./dark-plus-theme-converted.json') as Promise<{
+          default: monaco.editor.IStandaloneThemeData
+        }>,
+        async () => {
+          await loadWASM(
+            await (
+              await fetch('onigasm/lib/onigasm.wasm')
+            ).arrayBuffer()
+          )
+        }
+      ])
+      
+      
+      // monaco's built-in themes aren't powereful enough to handle TM tokens
+      // https://github.com/Nishkalkashyap/monaco-vscode-textmate-theme-converter#monaco-vscode-textmate-theme-converter
+      monaco.editor.defineTheme('dark-plus', vsDarkTheme);
       // extra libraries
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         vjsxDCode,
@@ -110,10 +151,10 @@ const CodeSpace = ({ children }: FuncCompParam<{}>) => {
       //runCode()
       editor.addCommand(
         monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
-        () => {
-          runCode()
-        }
+        runCode
       )
+      await wireTmGrammars(monaco, registry, grammars)
+      self.classList.remove('preparing')
       return runCode
     }
   })

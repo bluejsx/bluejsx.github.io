@@ -5,14 +5,18 @@
 .container {
   position             : absolute;
   height               : fit-content;
+  inset: 0;
+  margin-right: auto;
+  margin-left: auto;
+  
   background           : #21374b;
   background-attachment: fixed;
   //scroll-snap-type: y mandatory;
   //font-size: 125%;
   text-align           : left;
   //  section {
-  width                : calc(100vw - 2 * var(--page-padding-side));
-  padding              : var(--page-padding-side);
+  width                : min(50em, 90vw);
+  // padding              : var(--page-padding-side);
   padding-top           : var(--header-hight);
   //padding-top: calc(var(--page-padding-side)/2);
   //scroll-snap-align: start;

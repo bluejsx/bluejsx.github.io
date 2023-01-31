@@ -21,15 +21,19 @@
   },
   "homepage": "https://github.com/bluejsx/homepage#readme",
   "dependencies": {
+    "@stackblitz/sdk": "^1.8.2",
     "monaco-editor": "^0.33.0",
-    "typescript": "^4.7.3"
+    "monaco-editor-textmate": "^3.0.0",
+    "monaco-textmate": "^3.0.1",
+    "onigasm": "^2.2.5",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "bluejsx": "^1.2.0",
+    "bluejsx": "^1.3.6",
     "github-markdown-css": "^5.1.0",
-    "highlight.js": "^11.5.1",
-    "sass": "^1.52.3",
-    "vite": "^2.9.12",
+    "highlight.js": "^11.7.0",
+    "sass": "^1.57.1",
+    "vite": "^2.9.15",
     "vite-with-blue-pages": "^1.0.8"
   }
 }

@@ -1,7 +1,11 @@
 import { useAttr, AttrHolder, getRefs, FuncCompParam } from 'bluejsx'
 
 // takes in attributes as arguments (access to children elements via 'children' attribute)
-const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number }>) => {
+const Example = (
+  { progValue = 0, children }: FuncCompParam<{
+    progValue: number
+  }>
+) => {
   // create state holder
   const state = new AttrHolder()
   // declare elements
@@ -24,9 +28,9 @@ const Example = ({ progValue = 0, children }: FuncCompParam<{ progValue: number 
   useAttr(state, 'progValue', progValue)
 
   // when `state.progValue` changes, run the following listener
-  state.watch('progValue', v => {
-    progress.value = v
-    progText.data = v+''
+  state.watch('progValue', value => {
+    progress.value = value
+    progText.data = value.toString()
   })
 
   btn.onclick = () => {

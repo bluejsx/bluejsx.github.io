@@ -1,4 +1,4 @@
-import { ElemType, getRefs } from 'bluejsx'
+import { ElemType, getRefs, useConstProps } from 'bluejsx'
 
 export default () => {
 
@@ -69,16 +69,12 @@ export default () => {
       easing: 'ease-in-out',
     })
   ]
-  Object.defineProperties(self, {
-    play: {
-      value: () => {
-        for (let i = animations.length; i--;) animations[i].play()
-      },
+  useConstProps(self, {
+    play(){
+      for (let i = animations.length; i--;) animations[i].play()
     },
-    pause: {
-      value: () => {
-        for (let i = animations.length; i--;) animations[i].pause()
-      },
+    pause(){
+      for (let i = animations.length; i--;) animations[i].pause()
     }
   })
   self.pause()
