@@ -17,7 +17,8 @@
   //  section {
   width                : min(50em, 90vw);
   // padding              : var(--page-padding-side);
-  padding-top           : var(--header-hight);
+  padding-top          : var(--header-hight);
+  padding-bottom       : 5em;
   //padding-top: calc(var(--page-padding-side)/2);
   //scroll-snap-align: start;
   color                : #e7dacb;
