@@ -118,7 +118,7 @@ export default () => {
     const { top } = self.getBoundingClientRect()
     if (top < 500 && top > 0) {
       self.init().then(() => {
-        codeSelector.value = '4'
+        codeSelector.value = '3'
         onSelectChange()
       })
 
